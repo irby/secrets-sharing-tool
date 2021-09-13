@@ -39,7 +39,7 @@ namespace SecretsSharingTool.Core.Tests
             
             var secret = UnitOfWork.Secrets.First();
             Assert.IsTrue(secret.IsActive);
-            Assert.IsTrue(secret.ExpireDate <= DateTime.UtcNow.AddSeconds(60));
+            Assert.IsTrue(secret.ExpireDateTime <= DateTime.UtcNow.AddSeconds(60));
             Assert.IsNotNull(secret.CreatedOn);
             Assert.IsNull(secret.ModifiedOn);
         }

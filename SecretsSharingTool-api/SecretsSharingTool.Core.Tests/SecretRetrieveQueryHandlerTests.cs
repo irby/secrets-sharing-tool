@@ -34,7 +34,7 @@ namespace SecretsSharingTool.Core.Tests
                 Iv = Convert.FromBase64String("7GocUIxCXthkiEH0Sim6Yg=="),
                 SignedHash = Convert.FromBase64String("R6qo0u8Vj8QFEiHoaWLGzEJ/deznkTgY2apcX/iS/lbJZLv6Fd0auJPXmjPLQ03FALdnjQdFOzvJwnObePCjMj2C1vnM+tBmc+1mq+1+0OI4fp1mWJ2pqRD2cXqHaVx3umQ4r1nzoDfBiVo28ZzMNdDrAIRX3M90mXCcgSdbAm8="),
                 IsActive = true,
-                ExpireDate = DateTime.UtcNow.AddHours(1)
+                ExpireDateTime = DateTime.UtcNow.AddHours(1)
             };
             
             await UnitOfWork.Secrets.AddAsync(secret);
@@ -73,7 +73,7 @@ namespace SecretsSharingTool.Core.Tests
                     "i1ypPo06jXSAb1tOtY6iqKwcGzLpCIGXBr1E3iAJfzvjCzNbFIV4MEL2eRSqF1AGk3QzDQHk2QjtxHIXbJjcZDskLidwTpkG5Rr6HcGBlJyD7mtfuME7uEPVPaFiJghtjGecE6rBIkPBzIn2LhHvWbCJ5Tn7vgNY8G0dnOeBqes="),
                 SignedHash = Convert.FromBase64String("HM+320eIh64DLHOGUMkKq7B7mquKzssEWSinPyWFepNrHqCiseJVtJqmkvt9ugY+SaKe+dKltRCRaDVa4IEyaDoQ3/xLkrVAiQ58fu34QdVTw7Cn33Ih61NBowTvRymIyWbxVSvjzLpU+PJsf3v6uBrMp9eP4OEXZ1Itzb1OD3Q="),
                 IsActive = true,
-                ExpireDate = DateTime.UtcNow.AddSeconds(-10)
+                ExpireDateTime = DateTime.UtcNow.AddSeconds(-10)
             };
             
             await UnitOfWork.Secrets.AddAsync(secret);
@@ -104,7 +104,7 @@ namespace SecretsSharingTool.Core.Tests
                     "i1ypPo06jXSAb1tOtY6iqKwcGzLpCIGXBr1E3iAJfzvjCzNbFIV4MEL2eRSqF1AGk3QzDQHk2QjtxHIXbJjcZDskLidwTpkG5Rr6HcGBlJyD7mtfuME7uEPVPaFiJghtjGecE6rBIkPBzIn2LhHvWbCJ5Tn7vgNY8G0dnOeBqes="),
                 SignedHash = Convert.FromBase64String("HM+320eIh64DLHOGUMkKq7B7mquKzssEWSinPyWFepNrHqCiseJVtJqmkvt9ugY+SaKe+dKltRCRaDVa4IEyaDoQ3/xLkrVAiQ58fu34QdVTw7Cn33Ih61NBowTvRymIyWbxVSvjzLpU+PJsf3v6uBrMp9eP4OEXZ1Itzb1OD3Q="),
                 IsActive = false,
-                ExpireDate = DateTime.UtcNow.AddHours(1)
+                ExpireDateTime = DateTime.UtcNow.AddHours(1)
             };
             
             await UnitOfWork.Secrets.AddAsync(secret);
@@ -134,7 +134,7 @@ namespace SecretsSharingTool.Core.Tests
                     "i1ypPo06jXSAb1tOtY6iqKwcGzLpCIGXBr1E3iAJfzvjCzNbFIV4MEL2eRSqF1AGk3QzDQHk2QjtxHIXbJjcZDskLidwTpkG5Rr6HcGBlJyD7mtfuME7uEPVPaFiJghtjGecE6rBIkPBzIn2LhHvWbCJ5Tn7vgNY8G0dnOeBqes="),
                 SignedHash = Convert.FromBase64String("HM+320eIh64DLHOGUMkKq7B7mquKzssEWSinPyWFepNrHqCiseJVtJqmkvt9ugY+SaKe+dKltRCRaDVa4IEyaDoQ3/xLkrVAiQ58fu34QdVTw7Cn33Ih61NBowTvRymIyWbxVSvjzLpU+PJsf3v6uBrMp9eP4OEXZ1Itzb1OD3Q="),
                 IsActive = true,
-                ExpireDate = DateTime.UtcNow.AddHours(1)
+                ExpireDateTime = DateTime.UtcNow.AddHours(1)
             };
             
             await UnitOfWork.Secrets.AddAsync(secret);
@@ -165,7 +165,7 @@ namespace SecretsSharingTool.Core.Tests
                     "i1ypPo06jXSAb1tOtY6iqKwcGzLpCIGDNr1E3iAJfzvjCzNbFIV4MEL2eRSqF1AGk3QzDQHk2QjtxHIXbJjcZDskLidwTpkG5Rr6HcGBlJyD7mtfuME7uEPVPaFiJghtjGecE6rBIkPBzIn2LhHvWbCJ5Tn7vgNY8G0dnOeBqes="),
                 SignedHash = Convert.FromBase64String("HM+320eIh64DLHOGUMkKq7B7mquKzssEWSinPyWFepNrHqCiseJVtJqmkvt9ugY+SaKe+dKltRCRaDVa4IEyaDoQ3/xLkrVAiQ58fu34QdVTw7Cn33Ih61NBowTvRymIyWbxVSvjzLpU+PJsf3v6uBrMp9eP4OEXZ1Itzb1OD3Q="),
                 IsActive = true,
-                ExpireDate = DateTime.UtcNow.AddHours(1)
+                ExpireDateTime = DateTime.UtcNow.AddHours(1)
             };
             
             await UnitOfWork.Secrets.AddAsync(secret);
@@ -212,7 +212,7 @@ namespace SecretsSharingTool.Core.Tests
                     "i1ypPo06jXSAb1tOtY6iqKwcGzLpCIGXBr1E3iAJfzvjCzNbFIV4MEL2eRSqF1AGk3QzDQHk2QjtxHIXbJjcZDskLidwTpkG5Rr6HcGBlJyD7mtfuME7uEPVPaFiJghtjGecE6rBIkPBzIn2LhHvWbCJ5Tn7vgNY8G0dnOeBqes="),
                 SignedHash = Convert.FromBase64String("HM+320eIh64DLHOGUMkKq7B7mquKzssEWSinPyWFepNrHqCiseJVtJqmkvt9ugY+SaKe+dKltRCRaDVa4IEyaDoQ3/xLkrVAiQ58fu34QdVTw7Cn33Ih61NBowTvRymIyWbxVSvjzLpU+PJsf3v6uBrMp9eP4OEXZ1Itzb1OD3Q="),
                 IsActive = true,
-                ExpireDate = DateTime.UtcNow.AddHours(1)
+                ExpireDateTime = DateTime.UtcNow.AddHours(1)
             };
             
             await UnitOfWork.Secrets.AddAsync(secret);

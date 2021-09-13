@@ -29,7 +29,7 @@ namespace SecretsSharingTool.Core.Retrieve
         /// <returns>Returns null if the secret was not found, could not be decrypted, or validation failed. Returns a decrypted message if decryption and validation was successful.</returns>
         public async Task<SecretRetrieveQueryResponse> Handle(SecretRetrieveQuery query, CancellationToken cancellationToken)
         {
-            var secret = await _appUnitOfWork.Secrets.SingleOrDefaultAsync(p => p.Id == query.Id && p.IsActive && p.ExpireDate >= DateTime.UtcNow, cancellationToken);
+            var secret = await _appUnitOfWork.Secrets.SingleOrDefaultAsync(p => p.Id == query.Id && p.IsActive && p.ExpireDateTime >= DateTime.UtcNow, cancellationToken);
 
             if (secret == null)
                 return null;
