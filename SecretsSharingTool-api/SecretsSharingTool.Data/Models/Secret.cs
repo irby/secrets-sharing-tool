@@ -9,7 +9,7 @@ namespace SecretSharingTool.Data.Models
         public byte[] EncryptedSymmetricKey { get; set; }
         public byte[] Iv { get; set; }
         public byte[] SignedHash { get; set; }
-        public DateTime ExpireDate { get; set; }
+        public DateTime ExpireDateTime { get; set; }
         public int NumberOfAttempts { get; set; } = 0;
     }
 }
