@@ -1,13 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SecretSharingTool.Data.Database;
-using SecretSharingTool.Data.Models;
 using SecretsSharingTool.Core.Shared;
 
 namespace SecretsSharingTool.Core.Retrieve
@@ -56,25 +54,25 @@ namespace SecretsSharingTool.Core.Retrieve
                 var rsaDeformatter = new RSAPKCS1SignatureDeformatter(rsa);
                 rsaDeformatter.SetHashAlgorithm("SHA256");
                 
-                var message = rsa.Decrypt(secret.Message, RSAEncryptionPadding.Pkcs1);
+                var key = rsa.Decrypt(secret.EncryptedSymmetricKey, RSAEncryptionPadding.Pkcs1);
 
+                var message = DecryptStringFromBytes(secret.Message, key, secret.Iv);
+                
                 var sha = SHA256.Create();
-                var hash = await Task.Run(() => sha.ComputeHash(message), cancellationToken);
+                var hash = await Task.Run(() => sha.ComputeHash(System.Text.Encoding.Unicode.GetBytes(message)), cancellationToken);
 
                 // Validate the decrypted message was the original message passed in
                 if (!rsaDeformatter.VerifySignature(hash, secret.SignedHash))
                 {
                     throw new Exception("Signature is not valid");
                 }
-
+                
                 secret.SetModifiedAndInactive();
-                secret.ModifiedOn = DateTime.UtcNow;
-
                 await _appUnitOfWork.SaveChangesAsync(cancellationToken);
 
                 return new SecretRetrieveQueryResponse()
                 {
-                    Message = System.Text.Encoding.Unicode.GetString(message)
+                    Message = message
                 };
             }
             catch (Exception ex)
@@ -83,6 +81,27 @@ namespace SecretsSharingTool.Core.Retrieve
             }
 
             return null;
+        }
+
+        private static string DecryptStringFromBytes(byte[] cipherText, byte[] key, byte[] iv)
+        {
+            string plaintext = null;
+
+            using var rijAlg = new RijndaelManaged();
+            rijAlg.Key = key;
+            rijAlg.IV = iv;
+
+            var decryptor = rijAlg.CreateDecryptor(rijAlg.Key, rijAlg.IV);
+                
+            // Create the streams used for decryption. 
+            using var msDecrypt = new MemoryStream(cipherText);
+            using var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read);
+            using var srDecrypt = new StreamReader(csDecrypt);
+            // Read the decrypted bytes from the decrypting stream 
+            // and place them in a string.
+            plaintext = srDecrypt.ReadToEnd();
+
+            return plaintext;
         }
     }
 }
