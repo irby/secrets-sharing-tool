@@ -59,7 +59,7 @@ namespace SecretsSharingTool.Core.Retrieve
                 var message = DecryptStringFromBytes(secret.Message, key, secret.Iv);
                 
                 var sha = SHA256.Create();
-                var hash = await Task.Run(() => sha.ComputeHash(System.Text.Encoding.Unicode.GetBytes(message)), cancellationToken);
+                var hash = await Task.Run(() => sha.ComputeHash(secret.Message), cancellationToken);
 
                 // Validate the decrypted message was the original message passed in
                 if (!rsaDeformatter.VerifySignature(hash, secret.SignedHash))

@@ -29,10 +29,10 @@ namespace SecretsSharingTool.Core.Tests
             {
                 Id = guid,
                 Message = Convert.FromBase64String(
-                    "BXlxme+vWl88kjag3/x+jw=="),
-                EncryptedSymmetricKey = Convert.FromBase64String("SNBf1fAL0XeNuu8tzPQz8irlUez5CEeC7kCaAK29xKct3yRtOv1qovUtnnVPsodTMrkkfTYe0FJdS6gc4/LyF225XgvGi/iENywUC8FZa9g2K3JcDYWPP2o2OcNtngMRRXdHo+v5xJ9lc1i+/Zv7bXJdcl0sb8SucTAE/ukN3z0hklmnTox8yo8mc6jqtmFQlSaddEJ/kToKVpBoTVJUUt5FHTLzabnCDOtBScO0s3Q2LC/GRLQgNKf1kuE+ED1on1/N330ZnhPXlBR1GjN1LG8P//20UPenOxfXCVLPqy0ae/6x7BFV6/ezwLz60fA1PqJe7nMSvnr3hiMQu1n8+Q=="),
-                Iv = Convert.FromBase64String("ujc2xMLElb2znnB+x/yaog=="),
-                SignedHash = Convert.FromBase64String("YMiIJS1UDJC630GrFT7ee6myPZsShxN/CHtITwmq4qO81NtdOvKunLptAbXwmVBMYSPcbGW392cnIeBfrjPNV231IIPzS1Vr3YZksaxDMJEJvpSecFC1M2yHCegJkyKuprsiCVsSXbZkGaXtqDLNygoW/XcJ2d0jafk1YPcpPtqdu0cxfPVnLAl320Wxas4+TqFhkduM9S9g4qpVM8Ltq0rSJ7qn3F2wdCZ8VESNGsdXvsNcBvDo2UBatvfjR9pRsHnIobGIbMhofuVuxXxYND58xqiHGdIqlGHfbutk/QglHSSd22lyr4vo04iqV8RsWD+GwFl+UDcQu4FCRlX1qw=="),
+                    "lL0fisrg4/u5FLSX6f7Akw=="),
+                EncryptedSymmetricKey = Convert.FromBase64String("hck/SRVmJ2WxnSTzTdrb5bCTdnK1a5iDRVg6ttooCQdDA6P0Kz91L7dubmChYF5OswQawM8Uxp6XDe6Vz8cZv1xPDmXNRN8Z3tFnBpfgvO/k4sN9J21Ix2Ucw1mQXjMuYgBSJz9PAZCtKGhcdm+sr2sStheSbCO+OVPFWYn7t8I="),
+                Iv = Convert.FromBase64String("7GocUIxCXthkiEH0Sim6Yg=="),
+                SignedHash = Convert.FromBase64String("R6qo0u8Vj8QFEiHoaWLGzEJ/deznkTgY2apcX/iS/lbJZLv6Fd0auJPXmjPLQ03FALdnjQdFOzvJwnObePCjMj2C1vnM+tBmc+1mq+1+0OI4fp1mWJ2pqRD2cXqHaVx3umQ4r1nzoDfBiVo28ZzMNdDrAIRX3M90mXCcgSdbAm8="),
                 IsActive = true,
                 ExpireDate = DateTime.UtcNow.AddHours(1)
             };
@@ -44,7 +44,7 @@ namespace SecretsSharingTool.Core.Tests
             {
                 Id = guid,
                 PrivateKey = Convert.FromBase64String(
-                    "MIIEpQIBAAKCAQEAwaURWfiNkzFCSxaS8H5uGDwxXWUijSi/b+UNpyi58wsbFcjb8/2mKsu3fOg3MpGLnsjZd4cj6nGXQ60Uz0hs1hOSbXP1cWvsk+rgs7J5PDmcILoQ7l4NgY3vpyi12lPZt5eA32Xart9WgUkT7CV7iolccdhm9fkWX5NFQSfsVSe/7zQx5STyh9z/FMx5sfU7cxVAGeW/PuXG4eGhkMqRZUOR4vor6hCWmejbQQ/OxkLj8QyVw8FRKepKg+KK7Bn/V2utmXHucXi8oesW587KSaz9dwbctlBDWWMt2//0P+y565a5WWq/hAsoh2hHTQP0W+73bxnZSkw4W+iekD1SiQIDAQABAoIBAQCXWEDAdc+IzAYJE8KSLe40CM94NDQV6VP9yyKpk94JQ5POqeamwobdicyF1iRV5IUf+9BjZ/69HDxiC2NpQiy2ACQAYZHiLLyBOyCVsZapaElLFsFm26FosRsuJVZEJibSI5n4f+2zoSBF+WyVsxHkS8kxvTVzZ1OCLWMCMoa2YfckBI0YtD4u5Sw7983V4RbBUu4SesjX1oUbX+c8VI0/ZqmR5D4lU9cRExNGocb1Bxi8Ar0C47x/l1qcGBuugmrcmvXW7GxPHeO19TIyHf4I4g/5H7nFP04lyIgsmTi/LtTYOgT2vdxDWONnrVbIeJFaa+sKXIIskzoQqU2TEd0RAoGBAOy1hKEINxGvGwRxots1K0cHYKQTshKYZzeNUzRANBao+NWrm87UCbAUzNY2w7DWMXb4XeF/Mg8KeccOJlWPgsKw7km9nWX6T6hi6kjOU+UMSBtILV5/AGoyRPGXHt16aFNJxqKJk38d2yKJMRT0Cs6QYVCiUpPpe6WU9rbCzP/lAoGBANFtGKRnWcoj7NSxNOU8Km/gxikIyqA6M7SzU9Kv4oFfftWAze7DcN66hE9mtEQrBgvpIu5vkXcniCw9CjPb9UGpxjukCrHXPrxu0ankj5I8B3ZqkQxbnyOFmJDCPajFB41OUVmiuu7i9e2wrwZ03XMrH23xHFp6pvJ9CdWgyjXVAoGAZaT0lOmgLBnTMi9RzWuhb9i9KPfEKbQD7pjjN7ayJ2DbqXUNbN0kY9Yqt3nAwnjXuMyiE6i46DiJXm63C1qavduYF1Yy9o1sE1SWYjknUV3awMxXnxJOLUv0ywEnoddkYQ93GmiVS6qYZNYgm2zIDzd0clmhuB40mD/FSWmQ+fkCgYEApFSnznFuimgwMSEv8WSJpCpLM+27GYkyA2vnrV3oLT4ixyN/9AeV7J+MrMVZVFgyMWxpxZD0Ivx5JMVs2Q6S30h5zVjGL5BHoRKQIHDBm6zQ6kFqubi3Ied1tLlGKsUYTPAUc3J2nnanJTDL1hQjpHhE/D8C0ZiGoaYt7lxx71UCgYEA6/Uoedvma5mRIReF5zJtswb9VwMlrX5RAz3weCIjbBJbPG1lP0salyAsmfjqoQBM514HhO9BC3rTGdks1a5WPhhPfBkEBy7z8MYDuCVyRrQIAzoSopBICf+B6WA6iSUINWiaxdYKfFa+p4kZbRtS6ohYV92ITQA/tV3FE9P6mE8=")
+                    "MIICXgIBAAKBgQCvyZWb3qo9GQDsv2dNfi+budt0oIIomrHWu/biHvTvx3evWpIqTA+Mple+ykFYWSChTFEwOLnCX6ONP3Q9NaAcRP1NUIOEcs6seeDNROzBJ99Wn8sdEnzRQjXAVWrMUNtH+Zu8qZ+02DG1zli465sV+dEWTdyEA13U4FL1K4vI2wIDAQABAoGAT/i+hm3TNv6EDDC7l2ab1BXGwBUxgbV2yIE0vQRmXBt72Ju0uWdm/47BhnvPJJlPnfHxUaXM5J/L8Tt370zRLKnXf2PIPKwZ1kUZsSrMS4YibmjWfP0LuozrjWkBbYnNwBHb9UbAO7njwvcvXvMZGHddDpUQVUkYn289ELcG7dkCQQDhoMzG//92j/CqMCTFwQ6uInzCBCAs8M5iB33mT/h4GHG09J1Frz+afTvOGVqIw3igb9QOIs9HPnwR6UQPKIkXAkEAx3NDKPbWglmN0t4IzgyEgm1qKA7frEdicayjXktTpsuHAvV9CyCC5GUWy6dWvYNTrMYjtNw2FWCs5Jh0AGQQ3QJBALzk1WvpGKPXIAIrai3RUgwBPXdk4tcdB3vUj9fIrdlFhbSccirL7DDXlcEXQs9q7stKtDrdc7FOo6qPIvaZ1iMCQQCiinOEEc11A0iKPXqNeTQQGtz1clGkU7SNkTS+JsMwXhNUPP2/sKobOarfIyuUXE83sW3t+bx1pYig7wEyRFpdAkEA4DoUGCr5BxM0yKhY8mDNPwsi7RjFK8OPDFRBDO5oB/3M9XipC59EI0k79uO7N8TtJt/nGAmraMU5NyacK2A+eA==")
             };
             
             // Validate the secret is active before running

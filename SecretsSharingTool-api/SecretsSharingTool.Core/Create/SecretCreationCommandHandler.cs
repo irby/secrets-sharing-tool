@@ -34,7 +34,7 @@ namespace SecretsSharingTool.Core.Create
             var encryptedKey = rsa.Encrypt(key, RSAEncryptionPadding.Pkcs1);
 
             var sha = SHA256.Create();
-            var hash = await Task.Run(() => sha.ComputeHash(System.Text.Encoding.Unicode.GetBytes(request.Message)), cancellationToken);
+            var hash = await Task.Run(() => sha.ComputeHash(encryptedMessage), cancellationToken);
             
             // Sign the message to ensure integrity of the message stored
             var rsaFormatter = new RSAPKCS1SignatureFormatter(rsa);
