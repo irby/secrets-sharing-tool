@@ -2,29 +2,22 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SecretsSharingTool.Core.Create;
 using SecretsSharingTool.Core.Retrieve;
 
 namespace SecretsSharingTool.Api.Controllers
 {
-    [ApiController]
-    [AllowAnonymous]
-    [Route("api/[controller]")]
-    public sealed class SecretsController : ControllerBase
+    public sealed class SecretsController : BaseController
     {
-        private readonly IMediator _mediator;
-
-        public SecretsController(IMediator mediator)
+        public SecretsController(IMediator mediator) : base(mediator)
         {
-            _mediator = mediator;
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] SecretCreationCommand command)
         {
-            var result = await _mediator.Send(command);
+            var result = await Mediator.Send(command);
 
             return Ok(result);
         }
@@ -38,11 +31,13 @@ namespace SecretsSharingTool.Api.Controllers
                 PrivateKey = Convert.FromBase64String(key.Replace(" ", "+"))
             };
 
-            var result = await _mediator.Send(query);
+            var result = await Mediator.Send(query);
 
             if (result == null)
             {
-                return NotFound(new { Message = "Resource was either not found or expired, or the key provided may not be correct" });
+                return BadRequest(
+                    new { Message = "Resource was either not found or expired, or the key provided may not be correct" }
+                    );
             }
 
             return Ok(result);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using SecretSharingTool.Data.Models.Shared;
 
 namespace SecretSharingTool.Data.Models

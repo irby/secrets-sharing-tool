@@ -16,7 +16,7 @@ namespace SecretsSharingTool.Core.Tests
         [SetUp]
         public void Setup()
         {
-            _commandHandler = new SecretCreationCommandHandler(UnitOfWork);
+            _commandHandler = new SecretCreationCommandHandler(UnitOfWork, Logger);
         }
 
         [Test]
