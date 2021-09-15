@@ -4,28 +4,26 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using SecretSharingTool.Data.Database;
 using SecretSharingTool.Data.Models;
 using SecretsSharingTool.Core.Shared;
 
 namespace SecretsSharingTool.Core.Create
 {
-    public sealed class SecretCreationCommandHandler : IRequestHandler<SecretCreationCommand, SecretCreationCommandHandlerResponse>
+    public sealed class SecretCreationCommandHandler : BaseRequestHandler<SecretCreationCommand, SecretCreationCommandHandlerResponse>
     {
-        public SecretCreationCommandHandler(AppUnitOfWork appUnitOfWork)
+        public SecretCreationCommandHandler(AppUnitOfWork appUnitOfWork, ILogger logger) : base(appUnitOfWork, logger)
         {
-            _appUnitOfWork = appUnitOfWork;
         }
 
-        private readonly AppUnitOfWork _appUnitOfWork;
-        
         /// <summary>
         /// Using the Rijndael and RSA encryption schemes, encrypt and sign the message and store into a database. Return the private key and GUID back to the caller.
         /// </summary>
         /// <param name="request">A request containing the message to be encrypted as well as the time to live in seconds.</param>
         /// <param name="cancellationToken"></param>
         /// <returns>The GUID and private key associated to the secret.</returns>
-        public async Task<SecretCreationCommandHandlerResponse> Handle(SecretCreationCommand request, CancellationToken cancellationToken)
+        public override async Task<SecretCreationCommandHandlerResponse> Handle(SecretCreationCommand request, CancellationToken cancellationToken)
         {
             var (encryptedMessage, key, iv) = EncryptStringToBytes(request.Message);
             
@@ -51,8 +49,8 @@ namespace SecretsSharingTool.Core.Create
             
             secret.SetCreatedAndActive();
 
-            await _appUnitOfWork.Secrets.AddAsync(secret, cancellationToken);
-            await _appUnitOfWork.SaveChangesAsync(cancellationToken);
+            await AppUnitOfWork.Secrets.AddAsync(secret, cancellationToken);
+            await AppUnitOfWork.SaveChangesAsync(cancellationToken);
 
             return new SecretCreationCommandHandlerResponse()
             {

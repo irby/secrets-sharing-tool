@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Castle.Core.Logging;
+using Moq;
 using NUnit.Framework;
 using SecretSharingTool.Data.Models;
 using SecretsSharingTool.Core.Retrieve;
@@ -15,7 +17,7 @@ namespace SecretsSharingTool.Core.Tests
         [SetUp]
         public void SetUp()
         {
-            _handler = new SecretRetrieveQueryHandler(UnitOfWork);
+            _handler = new SecretRetrieveQueryHandler(UnitOfWork, Logger);
         }
         
         #region Handler Tests
