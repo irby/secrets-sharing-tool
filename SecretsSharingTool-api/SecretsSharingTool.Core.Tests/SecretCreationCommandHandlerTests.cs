@@ -9,7 +9,7 @@ using SecretsSharingTool.Core.Create;
 
 namespace SecretsSharingTool.Core.Tests
 {
-    public class SecretCreationCommandHandlerTests : BaseHandlerTests
+    public class SecretCreationCommandHandlerTests : BaseHandlerTests<SecretCreationCommandHandler>
     {
         private SecretCreationCommandHandler _commandHandler;
         

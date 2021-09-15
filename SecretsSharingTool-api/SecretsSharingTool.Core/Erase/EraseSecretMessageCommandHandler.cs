@@ -12,7 +12,7 @@ namespace SecretsSharingTool.Core.Erase
 {
     public sealed class EraseSecretMessageCommandHandler : BaseRequestHandler<EraseSecretMessageCommand>
     {
-        public EraseSecretMessageCommandHandler(AppUnitOfWork appUnitOfWork, ILogger logger) : base(appUnitOfWork, logger)
+        public EraseSecretMessageCommandHandler(AppUnitOfWork appUnitOfWork, ILogger<EraseSecretMessageCommandHandler> logger) : base(appUnitOfWork, logger)
         {
         }
         

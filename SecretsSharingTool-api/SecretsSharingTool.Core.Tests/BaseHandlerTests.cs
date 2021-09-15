@@ -7,10 +7,10 @@ using SecretSharingTool.Data.Database;
 
 namespace SecretsSharingTool.Core.Tests
 {
-    public abstract class BaseHandlerTests
+    public abstract class BaseHandlerTests<T>
     {
         protected AppUnitOfWork UnitOfWork;
-        protected ILogger Logger;
+        protected ILogger<T> Logger;
 
         [SetUp]
         public virtual void Initialize()
@@ -20,7 +20,7 @@ namespace SecretsSharingTool.Core.Tests
                 builder
                     .AddConsole();
             });
-            Logger = loggerFactory.CreateLogger<Program>();
+            Logger = loggerFactory.CreateLogger<T>();
             var mockUnitOfWorkOptions = new DbContextOptionsBuilder<AppUnitOfWork>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;

@@ -9,7 +9,7 @@ using SecretsSharingTool.Core.Erase;
 
 namespace SecretsSharingTool.Core.Tests
 {
-    public sealed class EraseSecretCommandHandlerTests : BaseHandlerTests
+    public sealed class EraseSecretCommandHandlerTests : BaseHandlerTests<EraseSecretMessageCommandHandler>
     {
         private EraseSecretMessageCommandHandler _handler;
         

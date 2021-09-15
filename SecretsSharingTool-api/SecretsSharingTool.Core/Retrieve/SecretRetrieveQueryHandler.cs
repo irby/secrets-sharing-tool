@@ -14,7 +14,7 @@ namespace SecretsSharingTool.Core.Retrieve
 {
     public sealed class SecretRetrieveQueryHandler : BaseRequestHandler<SecretRetrieveQuery, SecretRetrieveQueryResponse>
     {
-        public SecretRetrieveQueryHandler(AppUnitOfWork appUnitOfWork, ILogger logger) : base(appUnitOfWork, logger)
+        public SecretRetrieveQueryHandler(AppUnitOfWork appUnitOfWork, ILogger<SecretRetrieveQueryHandler> logger) : base(appUnitOfWork, logger)
         {
         }
         
