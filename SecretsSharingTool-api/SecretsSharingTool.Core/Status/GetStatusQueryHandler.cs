@@ -9,7 +9,7 @@ namespace SecretsSharingTool.Core.Status
 {
     public sealed class GetStatusQueryHandler : BaseRequestHandler<GetStatusQuery, bool>
     {
-        public GetStatusQueryHandler(AppUnitOfWork appUnitOfWork, ILogger logger) : base(appUnitOfWork, logger)
+        public GetStatusQueryHandler(AppUnitOfWork appUnitOfWork, ILogger<GetStatusQueryHandler> logger) : base(appUnitOfWork, logger)
         {
         }
 

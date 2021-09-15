@@ -36,7 +36,7 @@ namespace SecretsSharingTool.Api
         {
             services.AddControllers();
             services.AddMediatR(typeof(ISecretsSharingToolCore).GetTypeInfo().Assembly);
-            
+
             AssemblyScanner.FindValidatorsInAssembly(typeof(ISecretsSharingToolCore).Assembly).ForEach(item => services.AddScoped(item.InterfaceType, item.ValidatorType));
 
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));

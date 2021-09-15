@@ -10,7 +10,7 @@ using SecretsSharingTool.Core.Retrieve;
 
 namespace SecretsSharingTool.Core.Tests
 {
-    public sealed class SecretRetrieveQueryHandlerTests : BaseHandlerTests
+    public sealed class SecretRetrieveQueryHandlerTests : BaseHandlerTests<SecretRetrieveQueryHandler>
     {
         private SecretRetrieveQueryHandler _handler;
 

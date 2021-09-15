@@ -13,7 +13,7 @@ namespace SecretsSharingTool.Core.Create
 {
     public sealed class SecretCreationCommandHandler : BaseRequestHandler<SecretCreationCommand, SecretCreationCommandHandlerResponse>
     {
-        public SecretCreationCommandHandler(AppUnitOfWork appUnitOfWork, ILogger logger) : base(appUnitOfWork, logger)
+        public SecretCreationCommandHandler(AppUnitOfWork appUnitOfWork, ILogger<SecretCreationCommandHandler> logger) : base(appUnitOfWork, logger)
         {
         }
 
