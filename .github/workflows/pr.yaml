@@ -24,11 +24,11 @@ jobs:
       - name: Display dotnet version
         run: dotnet --version
       - name: Install dependencies
-        working-directory: ./SecretsSharingTool-api
+        working-directory: ./src/api
         run: dotnet restore
       - name: Build
-        working-directory: ./SecretsSharingTool-api
+        working-directory: ./src/api
         run: dotnet build --configuration Release --no-restore
       - name: Test with dotnet
-        working-directory: ./SecretsSharingTool-api
+        working-directory: ./src/api
         run: dotnet test --verbosity normal
