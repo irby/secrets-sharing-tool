@@ -21,14 +21,15 @@ namespace SecretsSharingTool.Api.Middleware
             var ipAddress = context.Connection.RemoteIpAddress;
             var method = context.Request.Method;
             var path = context.Request.Path;
+            var userAgent = context.Request.Headers["User-Agent"].ToString() ?? "Unknown agent";
 
-            _logger.LogInformation($"Request received\t{ipAddress}\t{method}\t{path}");
+            _logger.LogInformation($"Request received\t{ipAddress}\t{method}\t{path}\t{userAgent}");
 
             await _next.Invoke(context);
 
             var responseStatusCode = context.Response.StatusCode;
             
-            _logger.LogInformation($"Request complete\t{ipAddress}\t{method}\t{path}\t{responseStatusCode}");
+            _logger.LogInformation($"Request complete\t{ipAddress}\t{method}\t{path}\t{userAgent}\t{responseStatusCode}");
         }
     }
 }

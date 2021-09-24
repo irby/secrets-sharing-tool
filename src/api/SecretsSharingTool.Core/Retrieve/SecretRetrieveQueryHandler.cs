@@ -39,7 +39,7 @@ namespace SecretsSharingTool.Core.Retrieve
                 // If secret has had more than allowed number of accesses, inactivate the record and return
                 if (secret.NumberOfAttempts >= NumberOfAllowedAttempts)
                 {
-                    Logger.LogInformation($"Number of allowed accesses has passed for record {secret.Id}");
+                    Logger.LogWarning($"Number of allowed accesses has passed for record {secret.Id}");
                     secret.SetModifiedAndInactive();
                     secret.Message = null;
                     await AppUnitOfWork.SaveChangesAsync(cancellationToken);
