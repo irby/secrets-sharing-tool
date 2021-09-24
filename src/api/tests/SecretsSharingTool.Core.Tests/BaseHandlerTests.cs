@@ -1,7 +1,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using NUnit.Framework;
 using SecretSharingTool.Data.Database;
 

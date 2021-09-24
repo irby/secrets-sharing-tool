@@ -22,8 +22,6 @@ namespace SecretsSharingTool.Api
                 .AddCommandLine(args)
                 .Build();
 
-            Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(Environment.GetEnvironmentVariables()));
-            
             var configuredPort = Environment.GetEnvironmentVariable("PORT");
             var ok = int.TryParse(configuredPort, out var port);
 

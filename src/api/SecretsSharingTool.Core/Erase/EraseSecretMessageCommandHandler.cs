@@ -19,12 +19,12 @@ namespace SecretsSharingTool.Core.Erase
         public override async Task<Unit> Handle(EraseSecretMessageCommand request, CancellationToken cancellationToken)
         {
             var invalidSecrets = await AppUnitOfWork.Secrets.Where(p => p.Message != null
-                                                                  && (p.ExpireDateTime < DateTime.UtcNow || !p.IsActive))
+                                                                  && (p.ExpireDateTime < DateTimeOffset.UtcNow || !p.IsActive))
                                                                     .ToListAsync(cancellationToken);
 
             foreach (var secret in invalidSecrets)
             {
-                var status = secret.ExpireDateTime < DateTime.UtcNow ? "expired" : !secret.IsActive ? "inactive" : string.Empty;
+                var status = secret.ExpireDateTime < DateTimeOffset.UtcNow ? "expired" : !secret.IsActive ? "inactive" : string.Empty;
                 Logger.LogInformation($"Erasing message for {status} secret {secret.Id}");
                 secret.Message = null;
                 secret.SetModifiedAndInactive();

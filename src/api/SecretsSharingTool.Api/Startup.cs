@@ -17,6 +17,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using SecretSharingTool.Data.Database;
+using SecretsSharingTool.Api.Middleware;
 using SecretsSharingTool.Api.Pipeline;
 using SecretsSharingTool.Core;
 
@@ -61,6 +62,8 @@ namespace SecretsSharingTool.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseMiddleware<IpAddressLoggingMiddleware>();
 
             app.UseAuthorization();
 
