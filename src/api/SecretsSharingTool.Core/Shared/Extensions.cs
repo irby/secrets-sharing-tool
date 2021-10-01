@@ -1,4 +1,5 @@
 using System;
+using SecretSharingTool.Data.Models;
 using SecretSharingTool.Data.Models.Shared;
 
 namespace SecretsSharingTool.Core.Shared
@@ -15,6 +16,13 @@ namespace SecretsSharingTool.Core.Shared
         {
             entity.ModifiedOn = DateTime.UtcNow;
             entity.IsActive = false;
+        }
+
+        public static void ClearMessage(this Secret secret)
+        {
+            secret.Message = null;
+            secret.SignedHash = null;
+            secret.SetModifiedAndInactive();
         }
     }
 }
