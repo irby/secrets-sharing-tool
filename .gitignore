@@ -20,3 +20,6 @@ bld/
 *.sln.iml
 
 .cr/
+src/spa/.browserslistrc
+src/spa/.editorconfig
+src/spa/package-lock.json

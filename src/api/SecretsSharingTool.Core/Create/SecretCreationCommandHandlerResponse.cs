@@ -6,6 +6,6 @@ namespace SecretsSharingTool.Core.Create
     {
         public Guid Id { get; set; }
         public string Key { get; set; }
-        public DateTime ExpireDateTime { get; set; }
+        public DateTimeOffset ExpireDateTime { get; set; }
     }
 }

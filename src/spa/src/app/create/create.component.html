@@ -1,0 +1,45 @@
+<div class="content" role="main">
+
+  <textarea [formControl]="secretText" id="secretText"
+  placeholder="Enter your secrets here..."></textarea>
+  <div>
+    <select *ngIf="this.secretCreationResponse === null" name="timeOptions" id="timeOptions">
+      <option *ngFor="let option of this.timeExpiryOptions" [value]="option.timeInSeconds">
+        {{ option.displayText }}
+      </option>
+    </select>
+  </div>
+  <div>
+    <button mat-icon-button-lg color="primary" *ngIf="this.secretCreationResponse === null" [disabled]="isLoading" (click)="submit()">Submit</button>
+  </div>
+  <div *ngIf="this.errorMessage">
+    <p style="color: red">
+      {{this.errorMessage}}
+    </p>
+  </div>
+  <div *ngIf="this.isSystemError">
+    <p style="color: red">
+      An unexpected error has occurred. Please try your request again later.
+    </p>
+  </div>
+  <div style="padding-top: 10px" *ngIf="this.secretCreationResponse !== null">
+    <p>
+      Secret received successfully. Use the link below to access the secret:
+    </p>
+    
+    <div>
+      <input id="secretUrl" (click)="selectText()" readonly 
+      value="{{this.appUrl}}/vault/{{this.secretCreationResponse.id}}?key={{this.secretCreationResponse.key}}">
+      <button (click)="copyText()">Copy</button>
+    </div>
+
+    <p>
+      Your secret will expire at <b>{{this.expireDateTime}} UTC</b>
+    </p>
+
+    <button style="margin-top:10px" (click)="reset()">
+      Submit another secret
+    </button>
+  </div>
+
+</div>

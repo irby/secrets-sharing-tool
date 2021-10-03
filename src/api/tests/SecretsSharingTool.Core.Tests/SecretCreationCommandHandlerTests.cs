@@ -11,12 +11,12 @@ namespace SecretsSharingTool.Core.Tests
 {
     public class SecretCreationCommandHandlerTests : BaseHandlerTests<SecretCreationCommandHandler>
     {
-        private SecretCreationCommandHandler _commandHandler;
+        private SecretCreationCommandHandler _handler;
         
         [SetUp]
         public void Setup()
         {
-            _commandHandler = new SecretCreationCommandHandler(UnitOfWork, Logger);
+            _handler = new SecretCreationCommandHandler(UnitOfWork, Logger);
         }
 
         [Test]
@@ -30,7 +30,7 @@ namespace SecretsSharingTool.Core.Tests
             
             Assert.AreEqual(UnitOfWork.Secrets.Count(), 0);
             
-            var result = await _commandHandler.Handle(command, CancellationToken.None);
+            var result = await _handler.Handle(command, CancellationToken.None);
             
             Assert.IsNotNull(result.Id);
             Assert.IsNotNull(result.Key);

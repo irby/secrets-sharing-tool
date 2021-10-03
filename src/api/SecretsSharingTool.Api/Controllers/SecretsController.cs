@@ -14,6 +14,12 @@ namespace SecretsSharingTool.Api.Controllers
         {
         }
 
+        [HttpOptions]
+        public async Task<IActionResult> Options()
+        {
+            return Ok();
+        }
+        
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] SecretCreationCommand command)
         {

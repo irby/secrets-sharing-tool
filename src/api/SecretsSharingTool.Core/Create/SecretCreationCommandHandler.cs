@@ -44,7 +44,7 @@ namespace SecretsSharingTool.Core.Create
                 EncryptedSymmetricKey = encryptedKey,
                 Iv = iv,
                 SignedHash = rsaFormatter.CreateSignature(hash),
-                ExpireDateTime = DateTime.UtcNow.AddSeconds(request.SecondsToLive)
+                ExpireDateTime = DateTimeOffset.UtcNow.AddSeconds(request.SecondsToLive)
             };
             
             secret.SetCreatedAndActive();

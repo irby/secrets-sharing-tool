@@ -29,7 +29,7 @@ namespace SecretsSharingTool.Core.Retrieve
         /// <returns>Returns null if the secret was not found, could not be decrypted, or validation failed. Returns a decrypted message if decryption and validation was successful.</returns>
         public override async Task<SecretRetrieveQueryResponse> Handle(SecretRetrieveQuery query, CancellationToken cancellationToken)
         {
-            var secret = await AppUnitOfWork.Secrets.SingleOrDefaultAsync(p => p.Id == query.Id && p.IsActive && p.ExpireDateTime >= DateTime.UtcNow, cancellationToken);
+            var secret = await AppUnitOfWork.Secrets.SingleOrDefaultAsync(p => p.Id == query.Id && p.IsActive && p.ExpireDateTime >= DateTimeOffset.UtcNow, cancellationToken);
 
             if (secret == null)
                 return null;
@@ -39,9 +39,9 @@ namespace SecretsSharingTool.Core.Retrieve
                 // If secret has had more than allowed number of accesses, inactivate the record and return
                 if (secret.NumberOfAttempts >= NumberOfAllowedAttempts)
                 {
-                    Logger.LogInformation($"Number of allowed accesses has passed for record {secret.Id}");
-                    secret.SetModifiedAndInactive();
-                    secret.Message = null;
+                    Logger.LogWarning($"Number of allowed accesses has passed for record {secret.Id}");
+                    secret.Clear();
+                    
                     await AppUnitOfWork.SaveChangesAsync(cancellationToken);
                     return null;
                 }
@@ -68,8 +68,8 @@ namespace SecretsSharingTool.Core.Retrieve
                     throw new ConstraintException("Signature is not valid");
                 }
                 
-                secret.SetModifiedAndInactive();
-                secret.Message = null;
+                secret.Clear();
+                
                 await AppUnitOfWork.SaveChangesAsync(cancellationToken);
 
                 return new SecretRetrieveQueryResponse()

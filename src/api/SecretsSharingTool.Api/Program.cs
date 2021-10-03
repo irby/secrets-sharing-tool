@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace SecretsSharingTool.Api
 {
@@ -13,11 +11,36 @@ namespace SecretsSharingTool.Api
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            BuildWebHost(args).Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+        public static IWebHost BuildWebHost(string[] args)
+        {
+            var config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddEnvironmentVariables()
+                .AddCommandLine(args)
+                .Build();
+
+            var configuredPort = Environment.GetEnvironmentVariable("PORT");
+            var ok = int.TryParse(configuredPort, out var port);
+
+            if (!ok)
+            {
+                throw new ArgumentException("Unable to get the application's port from the environment.");
+            }
+
+            return WebHost.CreateDefaultBuilder(args)
+                .UseKestrel(x =>
+                {
+                    x.AddServerHeader = false;
+                    x.Limits.MinRequestBodyDataRate = new MinDataRate(bytesPerSecond: 100, gracePeriod: TimeSpan.FromSeconds(10));
+                    x.Limits.MinResponseDataRate = new MinDataRate(bytesPerSecond: 100, gracePeriod: TimeSpan.FromSeconds(10));
+                })
+                .UseConfiguration(config)
+                .UseStartup<Startup>()
+                .UseUrls("http://*:" + port + "/")
+                .Build();
+        }
     }
 }

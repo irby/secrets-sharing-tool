@@ -17,6 +17,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using SecretSharingTool.Data.Database;
+using SecretsSharingTool.Api.Middleware;
 using SecretsSharingTool.Api.Pipeline;
 using SecretsSharingTool.Core;
 
@@ -35,6 +36,14 @@ namespace SecretsSharingTool.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            
+            services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
+
             services.AddMediatR(typeof(ISecretsSharingToolCore).GetTypeInfo().Assembly);
 
             AssemblyScanner.FindValidatorsInAssembly(typeof(ISecretsSharingToolCore).Assembly).ForEach(item => services.AddScoped(item.InterfaceType, item.ValidatorType));
@@ -60,7 +69,11 @@ namespace SecretsSharingTool.Api
 
             app.UseHttpsRedirection();
 
+            app.UseCors("CorsPolicy");
+
             app.UseRouting();
+
+            app.UseMiddleware<IpAddressLoggingMiddleware>();
 
             app.UseAuthorization();
 
