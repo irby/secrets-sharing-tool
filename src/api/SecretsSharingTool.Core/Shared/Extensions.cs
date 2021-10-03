@@ -8,17 +8,17 @@ namespace SecretsSharingTool.Core.Shared
     {
         public static void SetCreatedAndActive(this AuditableEntity entity)
         {
-            entity.CreatedOn = DateTime.UtcNow;
+            entity.CreatedOn = DateTimeOffset.UtcNow;
             entity.IsActive = true;
         }
         
         public static void SetModifiedAndInactive(this AuditableEntity entity)
         {
-            entity.ModifiedOn = DateTime.UtcNow;
+            entity.ModifiedOn = DateTimeOffset.UtcNow;
             entity.IsActive = false;
         }
 
-        public static void ClearMessage(this Secret secret)
+        public static void Clear(this Secret secret)
         {
             secret.Message = null;
             secret.SignedHash = null;

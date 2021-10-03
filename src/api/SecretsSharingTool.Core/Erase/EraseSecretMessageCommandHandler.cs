@@ -26,7 +26,7 @@ namespace SecretsSharingTool.Core.Erase
             {
                 var status = secret.ExpireDateTime < DateTimeOffset.UtcNow ? "expired" : !secret.IsActive ? "inactive" : string.Empty;
                 Logger.LogInformation($"Erasing message for {status} secret {secret.Id}");
-                secret.ClearMessage();
+                secret.Clear();
             }
             
             await AppUnitOfWork.SaveChangesAsync(cancellationToken);

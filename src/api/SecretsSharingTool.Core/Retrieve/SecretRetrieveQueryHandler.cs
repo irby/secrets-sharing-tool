@@ -40,7 +40,7 @@ namespace SecretsSharingTool.Core.Retrieve
                 if (secret.NumberOfAttempts >= NumberOfAllowedAttempts)
                 {
                     Logger.LogWarning($"Number of allowed accesses has passed for record {secret.Id}");
-                    secret.ClearMessage();
+                    secret.Clear();
                     
                     await AppUnitOfWork.SaveChangesAsync(cancellationToken);
                     return null;
@@ -68,7 +68,7 @@ namespace SecretsSharingTool.Core.Retrieve
                     throw new ConstraintException("Signature is not valid");
                 }
                 
-                secret.ClearMessage();
+                secret.Clear();
                 
                 await AppUnitOfWork.SaveChangesAsync(cancellationToken);
 
