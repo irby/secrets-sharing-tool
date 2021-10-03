@@ -9,12 +9,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { VaultComponent } from './vault/vault.component';
 import { CreateComponent } from './create/create.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
-  declarations: [		
+  declarations: [			
     AppComponent,
       VaultComponent,
-      CreateComponent
+      CreateComponent,
+      NotFoundComponent
    ],
   imports: [
     BrowserModule,

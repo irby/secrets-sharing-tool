@@ -9,8 +9,18 @@
     </div>
 
     <div *ngIf="!secretMessage && !isSystemError">
-      <h2><b>Hmmm, we could not retrieve your secret...</b></h2>
-      <h3>The secret was either not found, has expired, or has already been recovered.</h3>
+      <div *ngIf="parameterWarningMesssage">
+        <h2><b>Unable to process your request</b></h2>
+        <div *ngFor="let warning of parameterWarningMesssage">
+          {{warning}}
+        </div>
+      </div>
+
+      <div *ngIf="!parameterWarningMesssage">
+        <h2><b>Hmmm, we could not retrieve your secret...</b></h2>
+        <h3>The secret was either not found, has expired, or has already been recovered.</h3>
+      </div>
+      
     </div>
 
     <div *ngIf="!secretMessage && isSystemError">
