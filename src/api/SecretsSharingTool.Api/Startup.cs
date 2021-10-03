@@ -36,6 +36,14 @@ namespace SecretsSharingTool.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            
+            services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
+
             services.AddMediatR(typeof(ISecretsSharingToolCore).GetTypeInfo().Assembly);
 
             AssemblyScanner.FindValidatorsInAssembly(typeof(ISecretsSharingToolCore).Assembly).ForEach(item => services.AddScoped(item.InterfaceType, item.ValidatorType));
@@ -60,6 +68,8 @@ namespace SecretsSharingTool.Api
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("CorsPolicy");
 
             app.UseRouting();
 

@@ -1,0 +1,24 @@
+<div class="content" role="main">
+  <div *ngIf="isLoading">
+    <h3>Our workers are looking for your secret now...</h3>
+  </div>
+  <div *ngIf="!isLoading">
+    <div *ngIf="secretMessage">
+      <p>Your recovered secret:</p>
+      <textarea readonly>{{secretMessage}}</textarea>
+    </div>
+
+    <div *ngIf="!secretMessage && !isSystemError">
+      <h2><b>Hmmm, we could not retrieve your secret...</b></h2>
+      <h3>The secret was either not found, has expired, or has already been recovered.</h3>
+    </div>
+
+    <div *ngIf="!secretMessage && isSystemError">
+      <h3>An unexpected error has occured. Please try your request again later.</h3>
+    </div>
+  </div>
+  <div style="padding-top: 10px">
+    <button routerLink="/">Back to homepage</button>
+  </div>
+
+</div>

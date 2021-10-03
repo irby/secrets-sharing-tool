@@ -317,7 +317,5 @@
   transform: translateY(-50%);
 }
 
-a, a:hover, a:focus, a:active, a:visited {
-  text-decoration: none;
-  color: white;
-}
+
+
