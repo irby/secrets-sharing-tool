@@ -5,20 +5,20 @@
   <div *ngIf="!isLoading">
     <div *ngIf="secretMessage">
       <p>Your recovered secret:</p>
-      <textarea readonly>{{secretMessage}}</textarea>
+      <textarea id="secretMessage" readonly>{{secretMessage}}</textarea>
     </div>
 
     <div *ngIf="!secretMessage && !isSystemError">
-      <div *ngIf="parameterWarningMesssage">
+      <div *ngIf="parameterWarningMesssage.length">
         <h2><b>Unable to process your request</b></h2>
         <div *ngFor="let warning of parameterWarningMesssage">
           {{warning}}
         </div>
       </div>
 
-      <div *ngIf="!parameterWarningMesssage">
+      <div *ngIf="!parameterWarningMesssage.length">
         <h2><b>Hmmm, we could not retrieve your secret...</b></h2>
-        <h3>The secret was either not found, has expired, or has already been recovered.</h3>
+        <h3>Either the secret not found, has expired, or has already been recovered – or your key was invalid.</h3>
       </div>
       
     </div>
@@ -28,6 +28,11 @@
     </div>
   </div>
   <div style="padding-top: 10px">
+    <div *ngIf="secretMessage">
+      <button (click)="copyText()">Copy</button>
+    </div>
+  </div>
+  <div>
     <button routerLink="/">Back to homepage</button>
   </div>
 

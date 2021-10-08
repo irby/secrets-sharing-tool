@@ -15,6 +15,7 @@ export class VaultComponent implements OnInit {
   systemError: string = "An unexpected error has occured. Please try your request again later.";
   isSystemError: boolean = false;
   parameterWarningMesssage: string[] = [];
+  isCopied: boolean = false;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
@@ -63,6 +64,18 @@ export class VaultComponent implements OnInit {
       this.isLoading = false;
     });
     
+  }
+
+  copyText() {
+    this.selectText();
+    document.execCommand('copy');
+    this.isCopied = true;
+  }
+
+  selectText(){
+    const textElement = document.getElementById("secretMessage") as HTMLInputElement;
+    textElement?.focus();
+    textElement?.select();
   }
 
 }

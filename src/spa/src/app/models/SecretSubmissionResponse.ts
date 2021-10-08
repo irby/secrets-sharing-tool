@@ -11,6 +11,5 @@ export class SecretSubmissionResponse {
 
         const expiry = new Date(expireDateTime);
         this.displayExpireDateTime = `${expiry.getUTCMonth()}/${expiry.getUTCDay()}/${expiry.getUTCFullYear()}`;
-        console.log(this.displayExpireDateTime);
     }
 }

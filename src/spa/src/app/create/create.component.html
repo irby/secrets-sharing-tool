@@ -28,7 +28,7 @@
     </p>
     
     <div>
-      <input id="secretUrl" (click)="selectText()" readonly 
+      <input id="secretUrl" size="30" (click)="selectText()" readonly 
       value="{{this.appUrl}}/vault/{{this.secretCreationResponse.id}}?key={{this.secretCreationResponse.key}}">
       <button (click)="copyText()">Copy</button>
     </div>
