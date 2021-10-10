@@ -1,6 +1,6 @@
 <div class="content" role="main">
 
-  <textarea [formControl]="secretText" id="secretText"
+  <textarea *ngIf="this.secretCreationResponse === null" [disabled]="this.isLoading" [formControl]="secretText" id="secretText"
   placeholder="Enter your secrets here..."></textarea>
   <div>
     <select *ngIf="this.secretCreationResponse === null" name="timeOptions" id="timeOptions">
@@ -28,7 +28,7 @@
     </p>
     
     <div>
-      <input id="secretUrl" (click)="selectText()" readonly 
+      <input id="secretUrl" size="30" (click)="selectText()" readonly 
       value="{{this.appUrl}}/vault/{{this.secretCreationResponse.id}}?key={{this.secretCreationResponse.key}}">
       <button (click)="copyText()">Copy</button>
     </div>
