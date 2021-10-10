@@ -52,8 +52,6 @@ export class CreateComponent implements OnInit {
 
   async submit() {
     const option = (document.getElementById("timeOptions") as HTMLInputElement);
-    const secretText = (document.getElementById("secretText") as HTMLInputElement);
-    secretText.disabled = true;
     this.errorMessage = '';
     this.secretCreationResponse = null;
     this.isLoading = true;
@@ -69,12 +67,10 @@ export class CreateComponent implements OnInit {
       }, err => {
           if(err.status === 400) {
             this.errorMessage = err.error.message;
-            console.log(err.error.message);
           } else {
             this.isSystemError = true;
           }
         this.errorMessage = err.error.message;
-        console.log(err, err.error.message);
       });
 
     this.isLoading = false;

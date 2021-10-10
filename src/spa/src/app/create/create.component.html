@@ -1,6 +1,6 @@
 <div class="content" role="main">
 
-  <textarea *ngIf="this.secretCreationResponse === null" [formControl]="secretText" id="secretText"
+  <textarea *ngIf="this.secretCreationResponse === null" [disabled]="this.isLoading" [formControl]="secretText" id="secretText"
   placeholder="Enter your secrets here..."></textarea>
   <div>
     <select *ngIf="this.secretCreationResponse === null" name="timeOptions" id="timeOptions">
