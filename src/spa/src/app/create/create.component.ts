@@ -86,7 +86,6 @@ export class CreateComponent implements OnInit {
           } else {
             this.isSystemError = true;
           }
-        secretText.disabled = false;
         this.errorMessage = err.error.message;
       });
 
