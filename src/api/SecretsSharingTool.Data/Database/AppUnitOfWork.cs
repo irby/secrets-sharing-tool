@@ -9,7 +9,7 @@ namespace SecretSharingTool.Data.Database
             : base(options)
         {
         }
-        
+
         public DbSet<Secret> Secrets { get; set; }
     }
 }

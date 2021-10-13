@@ -17,6 +17,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using SecretSharingTool.Data.Database;
+using SecretsSharingTool.Api.Data;
 using SecretsSharingTool.Api.Middleware;
 using SecretsSharingTool.Api.Pipeline;
 using SecretsSharingTool.Core;
@@ -50,7 +51,7 @@ namespace SecretsSharingTool.Api
 
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
             
-            services.AddDbContext<AppUnitOfWork>(opt => opt.UseInMemoryDatabase("Test"));
+            AddDatabase(services);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "SecretsSharingTool.Api", Version = "v1"});
@@ -78,6 +79,14 @@ namespace SecretsSharingTool.Api
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+        }
+
+        public void AddDatabase(IServiceCollection serviceCollection)
+        {
+            var template = "server={0};database={1};user={2};password={3};default command timeout=180";
+            var connectionString = string.Format(template, Configuration["DB_HOST"], Configuration["DB_CATALOG"],
+                Configuration["DB_USER"], Configuration["DB_PASSWORD"]);
+            DataServices.Setup(serviceCollection, connectionString);
         }
     }
 }
