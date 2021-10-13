@@ -1,7 +1,10 @@
 <div class="content" role="main">
 
-  <textarea *ngIf="this.secretCreationResponse === null" [disabled]="this.isLoading" [formControl]="secretText" id="secretText"
-  placeholder="Enter your secrets here..."></textarea>
+  <div *ngIf="this.secretCreationResponse === null" class="textarea-wrapper">
+    <textarea (ngModelChange)="valueChange()" [formControl]="secretText" id="secretText"
+      placeholder="Enter your secrets here..."></textarea>
+      <span class="remaning"><span id="charactersRemaining">{{charactersRemaining}}</span>/{{maxCharacterCount}}</span>
+  </div>
   <div>
     <select *ngIf="this.secretCreationResponse === null" name="timeOptions" id="timeOptions">
       <option *ngFor="let option of this.timeExpiryOptions" [value]="option.timeInSeconds">
@@ -10,7 +13,8 @@
     </select>
   </div>
   <div>
-    <button mat-icon-button-lg color="primary" *ngIf="this.secretCreationResponse === null" [disabled]="isLoading" (click)="submit()">Submit</button>
+    <button mat-icon-button-lg color="primary" *ngIf="this.secretCreationResponse === null" 
+      [disabled]="isLoading || (charactersRemaining < 0)" (click)="submit()">Submit</button>
   </div>
   <div *ngIf="this.errorMessage">
     <p style="color: red">
