@@ -64,6 +64,9 @@ export class CreateComponent implements OnInit {
     } else if (charactersRemaining.classList.contains('warn-text')) {
       charactersRemaining.classList.remove('warn-text');
     }
+
+    this.isSystemError = false;
+    this.errorMessage = '';
   }
 
   async submit() {
