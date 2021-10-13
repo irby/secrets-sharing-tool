@@ -25,7 +25,11 @@
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "PORT": "5000"
+        "PORT": "5000",
+        "DB_HOST": "localhost",
+        "DB_CATALOG": "kronocryptapi",
+        "DB_USER": "dev",
+        "DB_PASSWORD": "a7emkmuFmkmjhZhbAFkliFmkU"
       }
     }
   }
