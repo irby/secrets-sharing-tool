@@ -5,7 +5,7 @@
   <div *ngIf="!isLoading">
     <div *ngIf="secretMessage">
       <p>Your recovered secret:</p>
-      <textarea id="secretMessage" readonly>{{secretMessage}}</textarea>
+      <textarea [className]="this.isHidden ? 'hidden-text' : ''" id="secretMessage" readonly>{{secretMessage}}</textarea>
     </div>
 
     <div *ngIf="!secretMessage && !isSystemError">
@@ -27,7 +27,10 @@
       <h3>An unexpected error has occured. Please try your request again later.</h3>
     </div>
   </div>
-  <div style="padding-top: 10px">
+  <div style="text-align: center; padding-top: 10px">
+    <div *ngIf="secretMessage">
+      <button (click)="toggleSecretVisibility()">{{this.isHidden ? 'Show Secret' : 'Hide Secret'}}</button>
+    </div>
     <div *ngIf="secretMessage">
       <button (click)="copyText()">Copy</button>
     </div>

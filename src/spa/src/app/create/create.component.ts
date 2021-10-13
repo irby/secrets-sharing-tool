@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { SecretSubmissionRequest } from '../models/SecretSubmissionRequest';
 import { SecretSubmissionResponse } from '../models/SecretSubmissionResponse';
 import { TimeOption } from '../models/TimeOption';
+import { HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-create',
@@ -23,6 +24,9 @@ export class CreateComponent implements OnInit {
   isLoading: boolean = false;
   isSystemError: boolean = false;
   isCopied: boolean = false;
+  maxCharacterCount: number = 5000;
+  charactersRemaining: number = this.maxCharacterCount;
+  tabPadding: string = '    ';
 
   constructor(private http: HttpClient){
     this.appUrl = environment.appUrl;
@@ -50,6 +54,18 @@ export class CreateComponent implements OnInit {
     textElement?.select();
   }
 
+  valueChange() {
+    const text = document.getElementById("secretText") as HTMLInputElement;
+    const charactersRemaining = document.getElementById("charactersRemaining") as HTMLInputElement;
+    this.charactersRemaining = this.maxCharacterCount - text.value.length;
+
+    if(this.charactersRemaining < 0) {
+      charactersRemaining.classList.add('warn-text');
+    } else if (charactersRemaining.classList.contains('warn-text')) {
+      charactersRemaining.classList.remove('warn-text');
+    }
+  }
+
   async submit() {
     const option = (document.getElementById("timeOptions") as HTMLInputElement);
     this.errorMessage = '';
@@ -70,6 +86,7 @@ export class CreateComponent implements OnInit {
           } else {
             this.isSystemError = true;
           }
+        secretText.disabled = false;
         this.errorMessage = err.error.message;
       });
 
@@ -88,6 +105,31 @@ export class CreateComponent implements OnInit {
 
     const secretText = (document.getElementById("secretText") as HTMLInputElement);
     secretText.disabled = false;
+
+    this.charactersRemaining = this.maxCharacterCount;
+  }
+
+  // Override the tab default behavior and instead treat tab like you would in a word editor
+  @HostListener('document:keydown.tab', ['$event'])
+  onKeydownHandler(event: KeyboardEvent) {
+    event.preventDefault();
+    const secretText = (document.getElementById("secretText") as HTMLInputElement);
+    
+    const cursorPosition = secretText.selectionStart;
+
+    const secretValue = secretText.value;
+
+    const firstHalf = secretValue.substring(0, cursorPosition!);
+    const secondHalf = secretValue.substring(cursorPosition!);
+
+    // Insert tab padding between the first half and second half
+    secretText.value = firstHalf + this.tabPadding + secondHalf;
+
+    // Place the cursor to the point at which it inserted the tab
+    secretText.selectionStart = (firstHalf + this.tabPadding).length;
+    secretText.selectionEnd = secretText.selectionStart;
+
+    this.valueChange();
   }
 
 }

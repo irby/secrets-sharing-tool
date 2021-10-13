@@ -317,5 +317,15 @@
   transform: translateY(-50%);
 }
 
-
-
+.textarea-wrapper {
+  position:relative;
+}
+.remaning {
+position:absolute;
+bottom: 10px;
+right:10px;
+opacity: 0.5;
+}
+.warn-text {
+  color: red;
+}

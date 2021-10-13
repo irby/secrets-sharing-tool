@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
+
 @Component({
   selector: 'app-vault',
   templateUrl: './vault.component.html',
@@ -16,6 +17,7 @@ export class VaultComponent implements OnInit {
   isSystemError: boolean = false;
   parameterWarningMesssage: string[] = [];
   isCopied: boolean = false;
+  isHidden: boolean = true;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
@@ -26,6 +28,7 @@ export class VaultComponent implements OnInit {
     this.isLoading = true;
     this.isSystemError = false;
     this.parameterWarningMesssage = [];
+    this.isHidden = true;
     
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if(paramMap.has('secretId')){
@@ -78,4 +81,7 @@ export class VaultComponent implements OnInit {
     textElement?.select();
   }
 
+  toggleSecretVisibility() {
+    this.isHidden = !this.isHidden;
+  }
 }
