@@ -329,3 +329,13 @@ opacity: 0.5;
 .warn-text {
   color: red;
 }
+
+.example-form {
+  min-width: 500px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}

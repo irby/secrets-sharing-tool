@@ -27,6 +27,7 @@ export class CreateComponent implements OnInit {
   maxCharacterCount: number = 5000;
   charactersRemaining: number = this.maxCharacterCount;
   tabPadding: string = '    ';
+  expiryTimeInSeconds: number = 0;
 
   constructor(private http: HttpClient){
     this.appUrl = environment.appUrl;
@@ -40,6 +41,8 @@ export class CreateComponent implements OnInit {
       new TimeOption('1 hour', 60 * 60),
       new TimeOption('24 hours', 60 * 60 * 24)
     ];
+
+    this.expiryTimeInSeconds = this.timeExpiryOptions[0].timeInSeconds;
   }
 
   copyText() {
@@ -70,7 +73,6 @@ export class CreateComponent implements OnInit {
   }
 
   async submit() {
-    const option = (document.getElementById("timeOptions") as HTMLInputElement);
     this.errorMessage = '';
     this.secretCreationResponse = null;
     this.isLoading = true;
@@ -78,7 +80,7 @@ export class CreateComponent implements OnInit {
     this.isCopied = false;
 
     await this.http.post<SecretSubmissionRequest>(environment.apiUrl + '/api/secrets', 
-      new SecretSubmissionRequest(this.secretText.value, parseInt(option.value))
+      new SecretSubmissionRequest(this.secretText.value, this.expiryTimeInSeconds)
       ).subscribe(data => {
         this.secretCreationResponse = data as unknown as SecretSubmissionResponse;
         const expiry = new Date(this.secretCreationResponse.expireDateTime);
@@ -105,10 +107,9 @@ export class CreateComponent implements OnInit {
     this.secretText.setValue('');
     this.isLoading = false;
 
-    const secretText = (document.getElementById("secretText") as HTMLInputElement);
-    secretText.disabled = false;
-
     this.charactersRemaining = this.maxCharacterCount;
+
+    this.expiryTimeInSeconds = this.timeExpiryOptions[0].timeInSeconds;
   }
 
   // Override the tab default behavior and instead treat tab like you would in a word editor
@@ -132,6 +133,10 @@ export class CreateComponent implements OnInit {
     secretText.selectionEnd = secretText.selectionStart;
 
     this.valueChange();
+  }
+
+  changeExpiryTime(value: number){
+    this.expiryTimeInSeconds = value;
   }
 
 }

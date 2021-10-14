@@ -53,13 +53,13 @@ namespace SecretsSharingTool.Core.Retrieve
                 rsa.ImportRSAPrivateKey(query.PrivateKey, out var privateKeyBytesRead);
 
                 var rsaDeformatter = new RSAPKCS1SignatureDeformatter(rsa);
-                rsaDeformatter.SetHashAlgorithm("SHA256");
+                rsaDeformatter.SetHashAlgorithm("SHA512");
                 
                 var key = rsa.Decrypt(secret.EncryptedSymmetricKey, RSAEncryptionPadding.Pkcs1);
 
                 var message = DecryptStringFromBytes(secret.Message, key, secret.Iv);
                 
-                var sha = SHA256.Create();
+                var sha = SHA512.Create();
                 var hash = await Task.Run(() => sha.ComputeHash(secret.Message), cancellationToken);
 
                 // Validate the decrypted message was the original message passed in

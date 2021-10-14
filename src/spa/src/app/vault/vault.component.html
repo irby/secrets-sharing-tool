@@ -4,8 +4,8 @@
   </div>
   <div *ngIf="!isLoading">
     <div *ngIf="secretMessage">
-      <p>Your recovered secret:</p>
-      <textarea [className]="this.isHidden ? 'hidden-text' : ''" id="secretMessage" readonly>{{secretMessage}}</textarea>
+        <p>Your recovered secret:</p>
+        <textarea [className]="this.isHidden ? 'hidden-text' : ''" id="secretMessage" readonly>{{secretMessage}}</textarea>
     </div>
 
     <div *ngIf="!secretMessage && !isSystemError">
@@ -29,14 +29,16 @@
   </div>
   <div style="text-align: center; padding-top: 10px">
     <div *ngIf="secretMessage">
-      <button (click)="toggleSecretVisibility()">{{this.isHidden ? 'Show Secret' : 'Hide Secret'}}</button>
+      <button mat-raised-button color="primary" (click)="toggleSecretVisibility()">{{this.isHidden ? 'Show Secret' : 'Hide Secret'}}</button>
     </div>
-    <div *ngIf="secretMessage">
-      <button (click)="copyText()">Copy</button>
+
+    <div *ngIf="secretMessage" style="padding-top:2px">
+      <button mat-stroked-button color="primary" (click)="copyText()">Copy</button>
     </div>
-  </div>
-  <div>
-    <button routerLink="/">Back to homepage</button>
-  </div>
+  
+    <div style="padding-top:2px">
+      <button mat-raised-button routerLink="/">Back to homepage</button>
+    </div>
+</div>
 
 </div>
