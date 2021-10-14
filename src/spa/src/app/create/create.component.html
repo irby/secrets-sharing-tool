@@ -1,19 +1,24 @@
 <div class="content" role="main">
 
-  <div *ngIf="this.secretCreationResponse === null" class="textarea-wrapper">
-    <textarea (ngModelChange)="valueChange()" [formControl]="secretText" id="secretText"
-      placeholder="Enter your secrets here..."></textarea>
+  <div *ngIf="this.secretCreationResponse === null" >
+    <mat-form-field class="example-form">
+      <textarea matInput class="example-full-width" (ngModelChange)="valueChange()" [formControl]="secretText" id="secretText"
+        placeholder="Enter your secrets here..."></textarea>
       <span class="remaning"><span id="charactersRemaining">{{charactersRemaining}}</span>/{{maxCharacterCount}}</span>
+    </mat-form-field>
   </div>
   <div>
-    <select *ngIf="this.secretCreationResponse === null" name="timeOptions" id="timeOptions">
-      <option *ngFor="let option of this.timeExpiryOptions" [value]="option.timeInSeconds">
-        {{ option.displayText }}
-      </option>
-    </select>
+    <mat-form-field *ngIf="this.secretCreationResponse === null" appearance="fill">
+    <mat-label>Secret duration</mat-label>
+    <mat-select  [(value)]="this.timeExpiryOptions[0].timeInSeconds" name="timeOptions" id="timeOptions" (selectionChange)="changeExpiryTime($event.value)">
+        <mat-option *ngFor="let option of this.timeExpiryOptions" [value]="option.timeInSeconds">
+          {{ option.displayText }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
   <div>
-    <button mat-icon-button-lg color="primary" *ngIf="this.secretCreationResponse === null" 
+    <button mat-raised-button color="primary" *ngIf="this.secretCreationResponse === null" 
       [disabled]="isLoading || (charactersRemaining < 0)" (click)="submit()">Submit</button>
   </div>
   <div *ngIf="this.errorMessage">
@@ -32,16 +37,19 @@
     </p>
     
     <div>
-      <input id="secretUrl" size="30" (click)="selectText()" readonly 
-      value="{{this.appUrl}}/vault/{{this.secretCreationResponse.id}}?key={{this.secretCreationResponse.key}}">
-      <button (click)="copyText()">Copy</button>
+      <mat-form-field>
+        <input matInput id="secretUrl" size="30" (click)="selectText()" readonly 
+          value="{{this.appUrl}}/vault/{{this.secretCreationResponse.id}}?key={{this.secretCreationResponse.key}}">
+        
+      </mat-form-field>
+      <button mat-stroked-button color="primary" (click)="copyText()">Copy</button>
     </div>
 
     <p>
       Your secret will expire at <b>{{this.expireDateTime}} UTC</b>
     </p>
 
-    <button style="margin-top:10px" (click)="reset()">
+    <button mat-raised-button style="margin-top:10px" (click)="reset()">
       Submit another secret
     </button>
   </div>

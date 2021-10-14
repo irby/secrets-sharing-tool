@@ -8,8 +8,6 @@ services:
     image: secrets-sharing-app:local
     networks:
       - migration-net
-    depends-on:
-      - mobile-api-migrator
     build:
       context: .
       dockerfile: ./env/Dockerfile

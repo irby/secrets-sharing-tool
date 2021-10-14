@@ -12,6 +12,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule,  } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatOptionModule } from "@angular/material/core";
+import { MatSelectModule } from "@angular/material/select";
 
 @NgModule({
     exports: [
@@ -26,7 +28,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
         MatDialogModule,
         MatTableModule,
         MatSortModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        MatOptionModule,
+        MatSelectModule
     ]
 })
 export class AngularMaterialModule{
