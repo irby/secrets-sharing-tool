@@ -31,12 +31,12 @@ namespace SecretsSharingTool.Core.Create
 
             var encryptedKey = rsa.Encrypt(key, RSAEncryptionPadding.Pkcs1);
 
-            var sha = SHA256.Create();
+            var sha = SHA512.Create();
             var hash = await Task.Run(() => sha.ComputeHash(encryptedMessage), cancellationToken);
             
             // Sign the message to ensure integrity of the message stored
             var rsaFormatter = new RSAPKCS1SignatureFormatter(rsa);
-            rsaFormatter.SetHashAlgorithm("SHA256");
+            rsaFormatter.SetHashAlgorithm("SHA512");
 
             var secret = new Secret()
             {
