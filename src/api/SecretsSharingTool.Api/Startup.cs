@@ -20,7 +20,9 @@ using SecretSharingTool.Data.Database;
 using SecretsSharingTool.Api.Data;
 using SecretsSharingTool.Api.Middleware;
 using SecretsSharingTool.Api.Pipeline;
+using SecretsSharingTool.Api.Queue;
 using SecretsSharingTool.Core;
+using SecretsSharingTool.Core.Erase;
 
 namespace SecretsSharingTool.Api
 {
@@ -50,6 +52,9 @@ namespace SecretsSharingTool.Api
             AssemblyScanner.FindValidatorsInAssembly(typeof(ISecretsSharingToolCore).Assembly).ForEach(item => services.AddScoped(item.InterfaceType, item.ValidatorType));
 
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
+
+            services.AddScoped<EraseSecretMessageService>();
+            services.AddScoped<SecretInvalidationBackgroundService>();
             
             AddDatabase(services);
             services.AddSwaggerGen(c =>
@@ -59,7 +64,11 @@ namespace SecretsSharingTool.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, 
+            IWebHostEnvironment env,
+            ILogger<Startup> logger,
+            IHostApplicationLifetime applicationLifetime,
+            SecretInvalidationBackgroundService secretInvalidationBackgroundService)
         {
             if (env.IsDevelopment())
             {
@@ -79,6 +88,39 @@ namespace SecretsSharingTool.Api
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            
+            applicationLifetime.ApplicationStarted.Register(() =>
+            {
+                logger.LogInformation("Starting background threads");
+                
+                StartQueue(secretInvalidationBackgroundService, true);
+            });
+
+            applicationLifetime.ApplicationStopping.Register(() =>
+            {
+                logger.LogInformation("Stopping background threads");
+                
+                StopQueue(secretInvalidationBackgroundService, true);
+            });
+            
+            void StartQueue(IBackgroundQueueService queue, bool flag)
+            {
+                if (flag)
+                {
+                    logger.LogInformation($"Starting queue: {queue.GetType()}");
+                    queue.Start();
+                    queue.Process();
+                }
+            }
+
+            void StopQueue(IBackgroundQueueService queue, bool flag)
+            {
+                if (flag)
+                {
+                    logger.LogInformation($"Stopping queue: {queue.GetType()}");
+                    queue.Stop();
+                }
+            }
         }
 
         public void AddDatabase(IServiceCollection serviceCollection)

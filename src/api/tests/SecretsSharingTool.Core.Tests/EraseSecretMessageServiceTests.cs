@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using NUnit.Framework;
 using SecretSharingTool.Data.Database;
 using SecretSharingTool.Data.Models;
@@ -9,14 +11,25 @@ using SecretsSharingTool.Core.Erase;
 
 namespace SecretsSharingTool.Core.Tests
 {
-    public sealed class EraseSecretCommandHandlerTests : BaseHandlerTests<EraseSecretMessageCommandHandler>
+    public sealed class EraseSecretMessageServiceTests : BaseHandlerTests<EraseSecretMessageService>
     {
-        private EraseSecretMessageCommandHandler _handler;
+        private EraseSecretMessageService _service;
         
         [SetUp]
         public void SetUp()
         {
-            _handler = new EraseSecretMessageCommandHandler(UnitOfWork, Logger);
+            var mockServiceFactory = new Mock<IServiceScopeFactory>();
+            var mockServiceScope = new Mock<IServiceScope>();
+            var mockServiceProvider = new Mock<IServiceProvider>();
+
+            mockServiceProvider.Setup(p => p.GetService(typeof(AppUnitOfWork)))
+                .Returns(UnitOfWork);
+            mockServiceScope.Setup(p => p.ServiceProvider)
+                .Returns(mockServiceProvider.Object);
+            mockServiceFactory.Setup(p => p.CreateScope())
+                .Returns(mockServiceScope.Object);
+            
+            _service = new EraseSecretMessageService(mockServiceFactory.Object, Logger);
         }
 
         [Test]
@@ -39,7 +52,7 @@ namespace SecretsSharingTool.Core.Tests
             await UnitOfWork.Secrets.AddAsync(secret);
             await UnitOfWork.SaveChangesAsync();
 
-            await _handler.Handle(new EraseSecretMessageCommand(), CancellationToken.None);
+            await _service.Handle(CancellationToken.None);
             
             Assert.IsNull(UnitOfWork.Secrets.First(p => p.Id == guid).Message);
         }
@@ -64,7 +77,7 @@ namespace SecretsSharingTool.Core.Tests
             await UnitOfWork.Secrets.AddAsync(secret);
             await UnitOfWork.SaveChangesAsync();
 
-            await _handler.Handle(new EraseSecretMessageCommand(), CancellationToken.None);
+            await _service.Handle(CancellationToken.None);
             
             Assert.IsNull(UnitOfWork.Secrets.First(p => p.Id == guid).Message);
         }
@@ -89,7 +102,7 @@ namespace SecretsSharingTool.Core.Tests
             await UnitOfWork.Secrets.AddAsync(secret);
             await UnitOfWork.SaveChangesAsync();
 
-            await _handler.Handle(new EraseSecretMessageCommand(), CancellationToken.None);
+            await _service.Handle(CancellationToken.None);
             
             Assert.IsNotNull(UnitOfWork.Secrets.First(p => p.Id == guid).Message);
         }
