@@ -20,6 +20,8 @@ namespace SecretsSharingTool.Api.Queue
 
         protected override async Task WorkerTask()
         {
+            Logger.LogDebug("Starting erase expired secrets task");
+            
             await Handler.Handle(CancellationToken.None);
         }
 
