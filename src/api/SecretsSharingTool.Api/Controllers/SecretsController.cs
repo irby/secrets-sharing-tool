@@ -25,7 +25,7 @@ namespace SecretsSharingTool.Api.Controllers
         {
             var result = await Mediator.Send(command);
 
-            return Ok(result);
+            return Created(new Uri($"{Environment.GetEnvironmentVariable("API_URL")}/api/{result.Id}?key={result.Key}"), result);
         }
 
         [HttpGet("{id}")]

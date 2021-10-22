@@ -35,11 +35,11 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
     this.timeExpiryOptions = [
-      new TimeOption('5 minutes', 60 * 5),
-      new TimeOption('10 minutes', 60 * 10),
       new TimeOption('30 minutes', 60 * 30),
       new TimeOption('1 hour', 60 * 60),
-      new TimeOption('24 hours', 60 * 60 * 24)
+      new TimeOption('8 hours', 60 * 60 * 8),
+      new TimeOption('24 hours', 60 * 60 * 24),
+      new TimeOption('7 days', 60 * 60 * 24 * 7)
     ];
 
     this.expiryTimeInSeconds = this.timeExpiryOptions[0].timeInSeconds;
