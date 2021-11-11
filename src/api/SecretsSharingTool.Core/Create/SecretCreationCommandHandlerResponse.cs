@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 
 namespace SecretsSharingTool.Core.Create
 {
@@ -7,5 +8,6 @@ namespace SecretsSharingTool.Core.Create
         public Guid Id { get; set; }
         public string Key { get; set; }
         public DateTimeOffset ExpireDateTime { get; set; }
+        public long ExpireDateTimeUnix => ExpireDateTime.ToUnixTimeSeconds();
     }
 }
