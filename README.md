@@ -66,7 +66,7 @@ If the secret retrieval is successful, the response body should be:
 If the secret retrieval is *not* successful, the response body will be:
 
 ```
-400 Bad Request
+422 Unprocessable Entity
 {
     "message": "Resource was either not found or expired, or the key provided may not be correct"
 }

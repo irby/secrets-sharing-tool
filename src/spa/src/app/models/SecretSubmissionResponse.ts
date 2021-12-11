@@ -2,14 +2,12 @@ export class SecretSubmissionResponse {
     id: string;
     key: string;
     expireDateTime: string;
-    displayExpireDateTime: string;
+    expireDateTimeUnix: number;
 
-    constructor(id: string, key:string, expireDateTime: string) {
+    constructor(id: string, key:string, expireDateTime: string, expireDateTimeUnix: number) {
         this.id = id;
         this.key = key;
         this.expireDateTime = expireDateTime;
-
-        const expiry = new Date(expireDateTime);
-        this.displayExpireDateTime = `${expiry.getUTCMonth()}/${expiry.getUTCDay()}/${expiry.getUTCFullYear()}`;
+        this.expireDateTimeUnix = expireDateTimeUnix;
     }
 }
