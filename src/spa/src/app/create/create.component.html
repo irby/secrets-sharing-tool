@@ -37,8 +37,8 @@
     </p>
     
     <div>
-      <mat-form-field>
-        <input matInput id="secretUrl" size="30" (click)="selectText()" readonly 
+      <mat-form-field class="secret-url-box">
+        <input matInput id="secretUrl" (click)="selectText()" readonly 
           value="{{this.appUrl}}/vault/{{this.secretCreationResponse.id}}?key={{this.secretCreationResponse.key}}">
         
       </mat-form-field>

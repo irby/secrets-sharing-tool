@@ -41,7 +41,7 @@ namespace SecretsSharingTool.Api.Controllers
 
             if (result == null)
             {
-                return BadRequest(
+                return UnprocessableEntity(
                     new { Message = "Resource was either not found or expired, or the key provided may not be correct" }
                     );
             }

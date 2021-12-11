@@ -79,12 +79,13 @@ export class CreateComponent implements OnInit {
     this.isSystemError = false;
     this.isCopied = false;
 
-    await this.http.post<SecretSubmissionRequest>(environment.apiUrl + '/api/secrets', 
+    await this.http.post<SecretSubmissionResponse>(environment.apiUrl + '/api/secrets', 
       new SecretSubmissionRequest(this.secretText.value, this.expiryTimeInSeconds)
       ).subscribe(data => {
-        this.secretCreationResponse = data as unknown as SecretSubmissionResponse;
+        this.secretCreationResponse = data;
         const expiry = new Date(this.secretCreationResponse.expireDateTime);
-        this.expireDateTime = `${expiry.getUTCMonth()+1}/${expiry.getUTCDate()}/${expiry.getUTCFullYear()} ${expiry.getUTCHours()}:${expiry.getUTCMinutes() < 10 ? '0' : ''}${expiry.getUTCMinutes()}:${expiry.getUTCSeconds() < 10 ? '0' : ''}${expiry.getUTCSeconds()}`;
+        const hours = 
+        this.expireDateTime = `${expiry.getUTCMonth()+1}/${expiry.getUTCDate()}/${expiry.getUTCFullYear()} ${expiry.getUTCHours() < 10 ? '0':''}${expiry.getUTCHours()}:${expiry.getUTCMinutes() < 10 ? '0' : ''}${expiry.getUTCMinutes()}:${expiry.getUTCSeconds() < 10 ? '0' : ''}${expiry.getUTCSeconds()}`;
       }, err => {
           if(err.status === 400) {
             this.errorMessage = err.error.message;

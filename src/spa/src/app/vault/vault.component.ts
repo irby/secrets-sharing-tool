@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { ErrorCodes } from '../enums/error-codes.enum';
 
 
 @Component({
@@ -61,7 +62,7 @@ export class VaultComponent implements OnInit {
       this.secretMessage = (data as any).message;
       this.isLoading = false;
     }, err => {
-      if(err.status !== 400) {
+      if(err.status !== ErrorCodes.UnprocessableEntity) {
         this.isSystemError = true;
       }
       this.isLoading = false;

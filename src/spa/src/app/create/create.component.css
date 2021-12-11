@@ -339,3 +339,8 @@ opacity: 0.5;
 .example-full-width {
   width: 100%;
 }
+
+.secret-url-box {
+  width: 200px;
+  padding-right: 10px;
+}
