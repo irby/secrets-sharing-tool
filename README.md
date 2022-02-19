@@ -1,4 +1,4 @@
-[![Main Quality](https://github.com/irby/secrets-sharing-tool/actions/workflows/main.yml/badge.svg)](https://github.com/irby/secrets-sharing-tool/actions/workflows/main.yml)
+[![Main Quality](https://github.com/irby/secrets-sharing-tool/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/irby/secrets-sharing-tool/actions/workflows/main.yml)
 
 # Secrets Sharing Tool
 
