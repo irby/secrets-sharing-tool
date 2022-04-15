@@ -3,7 +3,7 @@ services:
   secrets-api-mysql:
     env_file: ./env/local/secrets-db.local.env
     image: mysql:5.7
-    platform: linux/amd64
+    # platform: linux/amd64
     volumes:
       - ./env/mysqlconf:/etc/mysql/conf.d
     ports:
