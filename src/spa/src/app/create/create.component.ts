@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 import { SecretSubmissionRequest } from '../models/SecretSubmissionRequest';
 import { SecretSubmissionResponse } from '../models/SecretSubmissionResponse';
 import { TimeOption } from '../models/TimeOption';
@@ -35,14 +35,14 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
     this.timeExpiryOptions = [
-      new TimeOption('30 minutes', 60 * 30),
-      new TimeOption('1 hour', 60 * 60),
-      new TimeOption('8 hours', 60 * 60 * 8),
-      new TimeOption('24 hours', 60 * 60 * 24),
-      new TimeOption('7 days', 60 * 60 * 24 * 7)
+      new TimeOption('30 minutes', 30),
+      new TimeOption('1 hour', 60),
+      new TimeOption('8 hours', 60 * 8),
+      new TimeOption('24 hours', 60 * 24),
+      new TimeOption('7 days', 60 * 24 * 7)
     ];
 
-    this.expiryTimeInSeconds = this.timeExpiryOptions[0].timeInSeconds;
+    this.expiryTimeInSeconds = this.timeExpiryOptions[0].timeInMinutes;
   }
 
   copyText() {
@@ -110,7 +110,7 @@ export class CreateComponent implements OnInit {
 
     this.charactersRemaining = this.maxCharacterCount;
 
-    this.expiryTimeInSeconds = this.timeExpiryOptions[0].timeInSeconds;
+    this.expiryTimeInSeconds = this.timeExpiryOptions[0].timeInMinutes;
   }
 
   // Override the tab default behavior and instead treat tab like you would in a word editor

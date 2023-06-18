@@ -4,6 +4,12 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { CreateComponent } from './create.component';
+import { environment } from 'src/environments/environment';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { AngularMaterialModule } from '../angular-material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('CreateComponent', () => {
   let component: CreateComponent;
@@ -12,6 +18,7 @@ describe('CreateComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ CreateComponent ]
+      , imports: [ RouterTestingModule, HttpClientModule, AngularMaterialModule, NoopAnimationsModule, FormsModule, ReactiveFormsModule ]
     })
     .compileComponents();
   }));

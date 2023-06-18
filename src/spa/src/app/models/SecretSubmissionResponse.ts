@@ -1,13 +1,13 @@
 export class SecretSubmissionResponse {
-    id: string;
+    secretId: string;
     key: string;
     expireDateTime: string;
-    expireDateTimeUnix: number;
+    expireDateTimeEpoch: number;
 
-    constructor(id: string, key:string, expireDateTime: string, expireDateTimeUnix: number) {
-        this.id = id;
+    constructor(id: string, key:string, expireDateTime: string, expireDateTimeEpoch: number) {
+        this.secretId = id;
         this.key = key;
         this.expireDateTime = expireDateTime;
-        this.expireDateTimeUnix = expireDateTimeUnix;
+        this.expireDateTimeEpoch = expireDateTimeEpoch;
     }
 }

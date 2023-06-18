@@ -1,9 +1,9 @@
 export class SecretSubmissionRequest {
     message: string;
-    secondsToLive: number;
+    expireMinutes: number;
 
-    constructor(message: string, secondsToLive: number) {
-        this.message = message;
-        this.secondsToLive = secondsToLive;
+    constructor(message: string|null, expireMinutes: number) {
+        this.message = message ?? "";
+        this.expireMinutes = expireMinutes;
     }
 }
