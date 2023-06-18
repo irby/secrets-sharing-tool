@@ -1,14 +1,7 @@
-using System;
+namespace SecretsSharingTool.Core.Models.Shared;
 
-namespace SecretSharingTool.Data.Models.Shared
+public abstract class AuditableEntity : IdentifiableEntity
 {
-    public abstract class AuditableEntity
-    {
-        public Guid Id { get; set; }
-        public DateTimeOffset CreatedOn { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTimeOffset? ModifiedOn { get; set; }
-        public string ModifiedBy { get; set; }
-        public bool IsActive { get; set; } = true;
-    }
+    public DateTimeOffset CreatedOn { get; set; } = DateTimeOffset.UtcNow;
+    public DateTimeOffset UpdatedOn { get; set; } = DateTimeOffset.UtcNow;
 }

@@ -1,19 +1,31 @@
-# This compose fragment describes development environment
-# modifications to the original compose file.
 version: "3"
 services:
+  secrets-db:
+    command: --default-authentication-plugin=mysql_native_password
+    env_file: ./env/local/local.env
+    image: mysql/mysql-server:8.0
+    ports:
+      - "3306:3306"
+    volumes:
+      - secrets-datavolume:/var/lib/mysql
+    networks:
+      - secrets-net
+    container_name: secrets-db
   secrets-sharing-app:
     env_file:
       - ./env/local/local.env
     image: secrets-sharing-app:local
     networks:
-      - migration-net
+      - secrets-net
     build:
       context: .
       dockerfile: ./env/Dockerfile
     ports:
       - "5000:5000"
+      - "5001:5001"
 
 networks:
-  migration-net:
-    external: true
+  secrets-net:
+
+volumes:
+  secrets-datavolume:

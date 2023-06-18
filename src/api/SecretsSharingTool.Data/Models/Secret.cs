@@ -1,16 +1,20 @@
-﻿using System;
-using System.Runtime.Serialization;
-using SecretSharingTool.Data.Models.Shared;
+using SecretsSharingTool.Core.Models.Shared;
 
-namespace SecretSharingTool.Data.Models
+namespace SecretsSharingTool.Core.Models;
+
+public class Secret : AuditableEntity
 {
-    public sealed class Secret : AuditableEntity
+    public byte[]? EncryptedMessage { get; set; }
+    public byte[]? EncryptedSymmetricKey { get; set; }
+    public byte[] Iv { get; set; } = { new () };
+    public long ExpiryMinutes { get; set; }
+    public bool IsActive { get; set; } = true;
+    public int NumberOfFailedAccesses { get; set; } = 0;
+
+    public void Deactivate()
     {
-        public byte[] Message { get; set; }
-        public byte[] EncryptedSymmetricKey { get; set; }
-        public byte[] Iv { get; set; }
-        public byte[] SignedHash { get; set; }
-        public DateTimeOffset ExpireDateTime { get; set; }
-        public int NumberOfAttempts { get; set; } = 0;
+        EncryptedMessage = null;
+        IsActive = false;
+        UpdatedOn = DateTimeOffset.UtcNow;
     }
 }

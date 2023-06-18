@@ -10,8 +10,8 @@
   <div>
     <mat-form-field *ngIf="this.secretCreationResponse === null" appearance="fill">
     <mat-label>Secret duration</mat-label>
-    <mat-select  [(value)]="this.timeExpiryOptions[0].timeInSeconds" name="timeOptions" id="timeOptions" (selectionChange)="changeExpiryTime($event.value)">
-        <mat-option *ngFor="let option of this.timeExpiryOptions" [value]="option.timeInSeconds">
+    <mat-select  [(value)]="this.timeExpiryOptions[0].timeInMinutes" name="timeOptions" id="timeOptions" (selectionChange)="changeExpiryTime($event.value)">
+        <mat-option *ngFor="let option of this.timeExpiryOptions" [value]="option.timeInMinutes">
           {{ option.displayText }}
         </mat-option>
       </mat-select>
@@ -39,7 +39,7 @@
     <div>
       <mat-form-field class="secret-url-box">
         <input matInput id="secretUrl" (click)="selectText()" readonly 
-          value="{{this.appUrl}}/vault/{{this.secretCreationResponse.id}}?key={{this.secretCreationResponse.key}}">
+          value="{{this.appUrl}}/vault/{{this.secretCreationResponse.secretId}}?key={{this.secretCreationResponse.key}}">
         
       </mat-form-field>
       <button mat-stroked-button color="primary" (click)="copyText()">Copy</button>

@@ -1,9 +1,9 @@
 export class TimeOption {
     displayText: string;
-    timeInSeconds: number;
+    timeInMinutes: number;
 
-    constructor(displayText: string, timeInSeconds: number) {
+    constructor(displayText: string, timeInMinutes: number) {
         this.displayText = displayText;
-        this.timeInSeconds = timeInSeconds;
+        this.timeInMinutes = timeInMinutes;
     }
 }

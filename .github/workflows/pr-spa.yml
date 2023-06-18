@@ -1,0 +1,23 @@
+name: "Frontend Tests"
+on: 
+  pull_request:
+    paths:
+      - 'src/spa/**'
+
+jobs:
+  spa-test:
+    name: Test SPA
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ['16.10.0']
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+        working-directory: ./src/spa
+      - run: npm run test:cov
+        working-directory: ./src/spa
