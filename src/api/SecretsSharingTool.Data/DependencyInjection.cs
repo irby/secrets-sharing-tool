@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using SecretsSharingtool.Data.Database;
+using SecretsSharingTool.Data.Database;
 
-namespace SecretsSharingtool.Data;
+namespace SecretsSharingTool.Data;
 
 public static class DependencyInjection
 {

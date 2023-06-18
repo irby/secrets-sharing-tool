@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SecretsSharingTool.Core.Models;
 
-namespace SecretsSharingtool.Data;
+namespace SecretsSharingTool.Data;
 
 public class AppUnitOfWork : DbContext
 {

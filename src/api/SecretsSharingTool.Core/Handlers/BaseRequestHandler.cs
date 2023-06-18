@@ -1,6 +1,6 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
-using SecretsSharingtool.Data;
+using SecretsSharingTool.Data;
 
 namespace SecretsSharingTool.Core.Handlers;
 

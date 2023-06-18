@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SecretsSharingTool.Core.Models;
 using SecretsSharingTool.Core.Services;
-using SecretsSharingtool.Data;
+using SecretsSharingTool.Data;
 
 namespace SecretsSharingTool.Core.Handlers.Secret.Retrieve;
 

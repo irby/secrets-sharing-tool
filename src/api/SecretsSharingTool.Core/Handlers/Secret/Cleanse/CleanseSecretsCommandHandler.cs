@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SecretsSharingtool.Data;
+using SecretsSharingTool.Data;
 
 namespace SecretsSharingTool.Core.Handlers.Secret.Cleanse;
 

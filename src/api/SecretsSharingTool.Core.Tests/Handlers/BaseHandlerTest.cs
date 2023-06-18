@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using SecretsSharingTool.Core.Tests.Database;
-using SecretsSharingtool.Data;
+using SecretsSharingTool.Data;
 
 namespace SecretsSharingTool.Core.Tests.Handlers;
 

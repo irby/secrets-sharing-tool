@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using SecretsSharingTool.Core.Handlers.Health;
 using SecretsSharingTool.Core.Tests.Database;
-using SecretsSharingtool.Data.Database;
+using SecretsSharingTool.Data.Database;
 
 namespace SecretsSharingTool.Core.Tests.Handlers.Health;
 

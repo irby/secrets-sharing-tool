@@ -1,7 +1,7 @@
 using CustomEnvironmentConfig;
 using SecretsSharingTool.Core;
 using SecretsSharingTool.Core.Configuration;
-using SecretsSharingtool.Data;
+using SecretsSharingTool.Data;
 using SecretsSharingTool.Web.HostedServices;
 
 var builder = WebApplication.CreateBuilder(args);

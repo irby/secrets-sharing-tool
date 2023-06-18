@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 using SecretsSharingTool.Core.Services;
-using SecretsSharingtool.Data;
+using SecretsSharingTool.Data;
 
 namespace SecretsSharingTool.Core.Handlers.Secret.Create;
 

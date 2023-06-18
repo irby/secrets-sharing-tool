@@ -4,7 +4,7 @@ using CustomEnvironmentConfig;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SecretsSharingTool.Core.Configuration;
-using SecretsSharingtool.Data;
+using SecretsSharingTool.Data;
 using SecretsSharingTool.Common.Tests.Database;
 using SecretsSharingTool.Common.Tests.Exceptions;
 using SecretsSharingTool.Common.Tests.Fixtures;

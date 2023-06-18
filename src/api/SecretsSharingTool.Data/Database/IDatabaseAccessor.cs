@@ -1,4 +1,4 @@
-namespace SecretsSharingtool.Data.Database;
+namespace SecretsSharingTool.Data.Database;
 
 public interface IDatabaseAccessor
 {

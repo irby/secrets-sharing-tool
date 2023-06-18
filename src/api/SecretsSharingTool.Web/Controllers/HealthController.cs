@@ -2,7 +2,7 @@ using System.Net;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SecretsSharingTool.Core.Handlers.Health;
-using SecretsSharingtool.Data.Database;
+using SecretsSharingTool.Data.Database;
 
 namespace SecretsSharingTool.Web.Controllers;
 
