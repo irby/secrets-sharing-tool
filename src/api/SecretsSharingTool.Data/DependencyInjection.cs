@@ -21,32 +21,47 @@ public static class DependencyInjection
 
     public static void ApplyPendingMigrations(this IServiceCollection services)
     {
+        var numAttempts = 0;
+        var allowedAttempts = 10;
+        Exception exception = null;
+        
         var traceId = Guid.NewGuid();
         var provider = services.BuildServiceProvider();
         var db = provider.GetService<AppUnitOfWork>()!;
         var logger = provider.GetService<ILogger<AppUnitOfWork>>()!;
-        var pendingMigrations = db.Database.GetPendingMigrations().ToList();
-        LogMessageWithTraceId(logger, $"{pendingMigrations.Count} database migration(s) waiting to be applied.", traceId);
         
-        if (!pendingMigrations.Any())
+        while (numAttempts < allowedAttempts)
         {
-            LogMessageWithTraceId(logger, "No migrations will be applied.", traceId);
-            return;
-        }
+            try
+            {
+                var pendingMigrations = db.Database.GetPendingMigrations().ToList();
+        
+                LogMessageWithTraceId(logger, $"{pendingMigrations.Count} database migration(s) waiting to be applied.", traceId);
+        
+                if (!pendingMigrations.Any())
+                {
+                    LogMessageWithTraceId(logger, "No migrations will be applied.", traceId);
+                    return;
+                }
 
-        LogMessageWithTraceId(logger, $"Applying {pendingMigrations.Count} migration(s) to the database...", traceId);
-        LogMessageWithTraceId(logger, string.Join(", ", pendingMigrations), traceId);
+                LogMessageWithTraceId(logger, $"Applying {pendingMigrations.Count} migration(s) to the database...", traceId);
+                LogMessageWithTraceId(logger, string.Join(", ", pendingMigrations), traceId);
 
-        try
-        {
-            db.Database.Migrate();
-            LogMessageWithTraceId(logger, "Database migration(s) have been successfully applied.", traceId);
+                db.Database.Migrate();
+                LogMessageWithTraceId(logger, "Database migration(s) have been successfully applied.", traceId);
+                
+                return;
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
+                Thread.Sleep(1000);
+                numAttempts++;
+            }
         }
-        catch (Exception ex)
-        {
-            logger.LogCritical(ex, $"An error occurred while applying migration. \nError: {ex.Message}. \nTrace ID: {traceId}");
-            throw;
-        }
+        
+        
+        logger.LogCritical(exception, $"An error occurred while applying migration. \nError: {exception!.Message}. \nTrace ID: {traceId}");
     }
 
     private static void LogMessageWithTraceId(ILogger logger, string message, Guid traceId)
