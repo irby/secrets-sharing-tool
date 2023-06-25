@@ -14,7 +14,6 @@ import { HostListener } from '@angular/core';
 })
 export class CreateComponent implements OnInit {
 
-  itle = 'spa';
   secretText = new FormControl('');
   timeExpiryOptions: TimeOption[] = [];
   errorMessage = '';

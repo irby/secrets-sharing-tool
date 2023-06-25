@@ -1,46 +1,48 @@
 <div class="content" role="main">
 
-  <div *ngIf="this.secretCreationResponse === null" >
+  <div *ngIf="this.secretCreationResponse === null">
     <mat-form-field class="example-form">
-      <textarea matInput class="example-full-width" (ngModelChange)="valueChange()" [formControl]="secretText" id="secretText"
-        placeholder="Enter your secrets here..."></textarea>
+      <textarea matInput class="example-full-width" (ngModelChange)="valueChange()" [formControl]="secretText"
+        id="secretText" placeholder="Enter your secrets here..."></textarea>
       <span class="remaning"><span id="charactersRemaining">{{charactersRemaining}}</span>/{{maxCharacterCount}}</span>
     </mat-form-field>
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Secret duration</mat-label>
+        <mat-select [(value)]="this.timeExpiryOptions[0].timeInMinutes" name="timeOptions" id="timeOptions"
+          (selectionChange)="changeExpiryTime($event.value)">
+          <mat-option *ngFor="let option of this.timeExpiryOptions" [value]="option.timeInMinutes">
+            {{ option.displayText }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <button mat-raised-button color="primary" [disabled]="isLoading || (charactersRemaining < 0)"
+        (click)="submit()">Submit</button>
+    </div>
+    <div *ngIf="this.errorMessage">
+      <p style="color: red">
+        {{this.errorMessage}}
+      </p>
+    </div>
+    <div *ngIf="this.isSystemError">
+      <p style="color: red">
+        An unexpected error has occurred. Please try your request again later.
+      </p>
+    </div>
   </div>
-  <div>
-    <mat-form-field *ngIf="this.secretCreationResponse === null" appearance="fill">
-    <mat-label>Secret duration</mat-label>
-    <mat-select  [(value)]="this.timeExpiryOptions[0].timeInMinutes" name="timeOptions" id="timeOptions" (selectionChange)="changeExpiryTime($event.value)">
-        <mat-option *ngFor="let option of this.timeExpiryOptions" [value]="option.timeInMinutes">
-          {{ option.displayText }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  <div>
-    <button mat-raised-button color="primary" *ngIf="this.secretCreationResponse === null" 
-      [disabled]="isLoading || (charactersRemaining < 0)" (click)="submit()">Submit</button>
-  </div>
-  <div *ngIf="this.errorMessage">
-    <p style="color: red">
-      {{this.errorMessage}}
-    </p>
-  </div>
-  <div *ngIf="this.isSystemError">
-    <p style="color: red">
-      An unexpected error has occurred. Please try your request again later.
-    </p>
-  </div>
-  <div style="padding-top: 10px" *ngIf="this.secretCreationResponse !== null">
+  
+  <div style="padding-top: 1.5em" *ngIf="this.secretCreationResponse !== null">
     <p>
       Secret received successfully. Use the link below to access the secret:
     </p>
-    
+
     <div>
       <mat-form-field class="secret-url-box">
-        <input matInput id="secretUrl" (click)="selectText()" readonly 
+        <input matInput id="secretUrl" (click)="selectText()" readonly
           value="{{this.appUrl}}/vault/{{this.secretCreationResponse.secretId}}?key={{this.secretCreationResponse.key}}">
-        
+
       </mat-form-field>
       <button mat-stroked-button color="primary" (click)="copyText()">Copy</button>
     </div>
@@ -49,7 +51,7 @@
       Your secret will expire at <b>{{this.expireDateTime}} UTC</b>
     </p>
 
-    <button mat-raised-button style="margin-top:10px" (click)="reset()">
+    <button mat-raised-button style="margin-top:1.5em" (click)="reset()">
       Submit another secret
     </button>
   </div>
