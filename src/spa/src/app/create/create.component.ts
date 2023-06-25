@@ -26,7 +26,7 @@ export class CreateComponent implements OnInit {
   maxCharacterCount: number = 5000;
   charactersRemaining: number = this.maxCharacterCount;
   tabPadding: string = '    ';
-  expiryTimeInSeconds: number = 0;
+  expiryTimeInMinutes: number = 0;
 
   constructor(private http: HttpClient){
     this.appUrl = environment.appUrl;
@@ -41,7 +41,7 @@ export class CreateComponent implements OnInit {
       new TimeOption('7 days', 60 * 24 * 7)
     ];
 
-    this.expiryTimeInSeconds = this.timeExpiryOptions[0].timeInMinutes;
+    this.expiryTimeInMinutes = this.timeExpiryOptions[0].timeInMinutes;
   }
 
   copyText() {
@@ -50,7 +50,7 @@ export class CreateComponent implements OnInit {
     this.isCopied = true;
   }
 
-  selectText(){
+  selectText() {
     const textElement = document.getElementById("secretUrl") as HTMLInputElement;
     textElement?.focus();
     textElement?.select();
@@ -79,7 +79,7 @@ export class CreateComponent implements OnInit {
     this.isCopied = false;
 
     await this.http.post<SecretSubmissionResponse>(environment.apiUrl + '/api/secrets', 
-      new SecretSubmissionRequest(this.secretText.value, this.expiryTimeInSeconds)
+      new SecretSubmissionRequest(this.secretText.value, this.expiryTimeInMinutes)
       ).subscribe(data => {
         this.secretCreationResponse = data;
         const expiry = new Date(this.secretCreationResponse.expireDateTime);
@@ -95,8 +95,6 @@ export class CreateComponent implements OnInit {
       });
 
     this.isLoading = false;
-
-
   }
 
   reset() {
@@ -109,7 +107,7 @@ export class CreateComponent implements OnInit {
 
     this.charactersRemaining = this.maxCharacterCount;
 
-    this.expiryTimeInSeconds = this.timeExpiryOptions[0].timeInMinutes;
+    this.expiryTimeInMinutes = this.timeExpiryOptions[0].timeInMinutes;
   }
 
   // Override the tab default behavior and instead treat tab like you would in a word editor
@@ -136,7 +134,7 @@ export class CreateComponent implements OnInit {
   }
 
   changeExpiryTime(value: number){
-    this.expiryTimeInSeconds = value;
+    this.expiryTimeInMinutes = value;
   }
 
 }
