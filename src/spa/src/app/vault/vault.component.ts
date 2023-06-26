@@ -1,8 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { ErrorCodes } from '../enums/error-codes.enum';
+import axios, { AxiosError } from 'axios';
+import { SecretSubmissionRetrieveResponse } from '../models/SecretSubmissionRetrieveResponse';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -20,7 +22,7 @@ export class VaultComponent implements OnInit {
   isCopied: boolean = false;
   isHidden: boolean = true;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) { }
+  constructor(private route: ActivatedRoute) { }
 
   async ngOnInit() {
     let secretId: string | null = null;
@@ -40,10 +42,10 @@ export class VaultComponent implements OnInit {
       privateKey = params['key'];
     });
 
-    await this.getSecret(secretId!, privateKey!);
+    await this.getSecret(secretId, privateKey);
   }
 
-  async getSecret(secretId: string, privateKey: string) {
+  async getSecret(secretId: string|null, privateKey: string|null) {
     if(!secretId || !privateKey) {
       this.isLoading = false;
 
@@ -57,17 +59,20 @@ export class VaultComponent implements OnInit {
 
       return;
     }
-    
-    await this.http.get(`${environment.apiUrl}/api/secrets/${secretId}?key=${privateKey}`).subscribe(data => {
-      this.secretMessage = (data as any).message;
-      this.isLoading = false;
-    }, err => {
-      if(err.status !== ErrorCodes.NotFound) {
+
+    try {
+      const resp = await axios.get<SecretSubmissionRetrieveResponse>(`${environment.apiUrl}/api/secrets/${secretId}?key=${privateKey}`);
+      this.secretMessage = resp.data.message;
+    } catch (error: any) {
+      const err = error as AxiosError<HttpErrorResponse>;
+      const errorResponse = err.response!;
+
+      if (errorResponse.status !== ErrorCodes.NotFound) {
         this.isSystemError = true;
       }
-      this.isLoading = false;
-    });
+    }
     
+    this.isLoading = false;
   }
 
   copyText() {
@@ -78,8 +83,8 @@ export class VaultComponent implements OnInit {
 
   selectText(){
     const textElement = document.getElementById("secretMessage") as HTMLInputElement;
-    textElement?.focus();
-    textElement?.select();
+    textElement!.focus();
+    textElement!.select();
   }
 
   toggleSecretVisibility() {
