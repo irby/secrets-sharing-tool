@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { environment } from '../../environments/environment';
@@ -6,6 +6,7 @@ import { SecretSubmissionRequest } from '../models/SecretSubmissionRequest';
 import { SecretSubmissionResponse } from '../models/SecretSubmissionResponse';
 import { TimeOption } from '../models/TimeOption';
 import { HostListener } from '@angular/core';
+import axios, { AxiosError } from 'axios';
 
 @Component({
   selector: 'app-create',
@@ -52,8 +53,8 @@ export class CreateComponent implements OnInit {
 
   selectText() {
     const textElement = document.getElementById("secretUrl") as HTMLInputElement;
-    textElement?.focus();
-    textElement?.select();
+    textElement!.focus();
+    textElement!.select();
   }
 
   valueChange() {
@@ -78,21 +79,23 @@ export class CreateComponent implements OnInit {
     this.isSystemError = false;
     this.isCopied = false;
 
-    await this.http.post<SecretSubmissionResponse>(environment.apiUrl + '/api/secrets', 
-      new SecretSubmissionRequest(this.secretText.value, this.expiryTimeInMinutes)
-      ).subscribe(data => {
-        this.secretCreationResponse = data;
-        const expiry = new Date(this.secretCreationResponse.expireDateTime);
-        const hours = 
-        this.expireDateTime = `${expiry.getUTCMonth()+1}/${expiry.getUTCDate()}/${expiry.getUTCFullYear()} ${expiry.getUTCHours() < 10 ? '0':''}${expiry.getUTCHours()}:${expiry.getUTCMinutes() < 10 ? '0' : ''}${expiry.getUTCMinutes()}:${expiry.getUTCSeconds() < 10 ? '0' : ''}${expiry.getUTCSeconds()}`;
-      }, err => {
-          if(err.status === 400) {
-            this.errorMessage = err.error.message;
-          } else {
-            this.isSystemError = true;
-          }
-        this.errorMessage = err.error.message;
-      });
+    try {
+      const response = await axios.post<SecretSubmissionResponse>(environment.apiUrl + '/api/secrets', 
+      new SecretSubmissionRequest(this.secretText.value, this.expiryTimeInMinutes));
+      this.secretCreationResponse = response.data;
+    }
+    catch (error: any) {
+      const err = error as AxiosError<HttpErrorResponse>;
+      const errorResponse = err.response!;
+
+      if (errorResponse.status === 400) {
+        this.errorMessage = errorResponse.data.message as string;
+      }
+      else {
+        this.errorMessage = "An unexpected error has occured. Please try again.";
+        this.isSystemError = true;
+      }
+    }
 
     this.isLoading = false;
   }
@@ -114,14 +117,14 @@ export class CreateComponent implements OnInit {
   @HostListener('document:keydown.tab', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
     event.preventDefault();
-    const secretText = (document.getElementById("secretText") as HTMLInputElement);
+    const secretText = document.getElementById("secretText") as HTMLInputElement;
     
-    const cursorPosition = secretText.selectionStart;
+    const cursorPosition = secretText.selectionStart!;
 
     const secretValue = secretText.value;
 
-    const firstHalf = secretValue.substring(0, cursorPosition!);
-    const secondHalf = secretValue.substring(cursorPosition!);
+    const firstHalf = secretValue.substring(0, cursorPosition);
+    const secondHalf = secretValue.substring(cursorPosition);
 
     // Insert tab padding between the first half and second half
     secretText.value = firstHalf + this.tabPadding + secondHalf;

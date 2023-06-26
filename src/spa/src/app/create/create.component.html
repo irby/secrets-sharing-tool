@@ -26,11 +26,6 @@
         {{this.errorMessage}}
       </p>
     </div>
-    <div *ngIf="this.isSystemError">
-      <p style="color: red">
-        An unexpected error has occurred. Please try your request again later.
-      </p>
-    </div>
   </div>
   
   <div style="padding-top: 1.5em" *ngIf="this.secretCreationResponse !== null">
