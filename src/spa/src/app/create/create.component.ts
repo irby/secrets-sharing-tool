@@ -7,6 +7,7 @@ import { SecretSubmissionResponse } from '../models/SecretSubmissionResponse';
 import { TimeOption } from '../models/TimeOption';
 import { HostListener } from '@angular/core';
 import axios, { AxiosError } from 'axios';
+import { ErrorCodes } from '../enums/error-codes.enum';
 
 @Component({
   selector: 'app-create',
@@ -88,7 +89,7 @@ export class CreateComponent implements OnInit {
       const err = error as AxiosError<HttpErrorResponse>;
       const errorResponse = err.response!;
 
-      if (errorResponse.status === 400) {
+      if (errorResponse.status === ErrorCodes.BadRequest) {
         this.errorMessage = errorResponse.data.message as string;
       }
       else {

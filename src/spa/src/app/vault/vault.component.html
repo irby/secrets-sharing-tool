@@ -16,14 +16,14 @@
         </div>
       </div>
 
-      <div *ngIf="!parameterWarningMesssage.length">
+      <div *ngIf="!parameterWarningMesssage.length" id="not-found-error">
         <h2><b>Hmmm, we could not retrieve your secret...</b></h2>
         <h3>Either the secret not found, has expired, or has already been recovered – or your key was invalid.</h3>
       </div>
       
     </div>
 
-    <div *ngIf="!secretMessage && isSystemError">
+    <div *ngIf="!secretMessage && isSystemError" id="system-error">
       <h3>An unexpected error has occured. Please try your request again later.</h3>
     </div>
   </div>
