@@ -1,0 +1,36 @@
+name: "End-to-end Tests"
+on: 
+  pull_request:
+    paths:
+      - 'src/api/**'
+      - 'src/spa/**'
+      - 'e2e/**'
+
+jobs:
+  e2e-test:
+    name: Test E2E
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ['16.10.0']
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Start Docker containers
+        working-directory: .
+        run: docker-compose --project-directory . -f env/local/docker-compose.local.yml up -d
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+        name: Install SPA dependencies
+        working-directory: ./src/spa
+      - run: npm start
+        name: Run SPA
+        working-directory: ./src/spa
+      - run: npm install
+        name: Install E2E dependencies
+        working-directory: ./e2e
+      - run: npx playwright test
+        name: Run E2E Tests
+        working-directory: ./e2e
