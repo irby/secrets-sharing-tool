@@ -1,0 +1,11 @@
+version: "3"
+services:
+  spa:
+    build: ./src/spa
+    ports:
+      - "4200:80"
+    networks:
+      - secrets-net
+
+networks:
+  secrets-net:
