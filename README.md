@@ -1,4 +1,4 @@
-[![Backend Tests](https://github.com/irby/secrets-sharing-tool/actions/workflows/pr-api.yml/badge.svg)](https://github.com/irby/secrets-sharing-tool/actions/workflows/pr-api.yml) [![Frontend Tests](https://github.com/irby/secrets-sharing-tool/actions/workflows/pr-spa.yml/badge.svg)](https://github.com/irby/secrets-sharing-tool/actions/workflows/pr-spa.yml)
+[![Backend Tests](https://github.com/irby/secrets-sharing-tool/actions/workflows/pr-api.yml/badge.svg)](https://github.com/irby/secrets-sharing-tool/actions/workflows/pr-api.yml) [![Frontend Tests](https://github.com/irby/secrets-sharing-tool/actions/workflows/pr-spa.yml/badge.svg)](https://github.com/irby/secrets-sharing-tool/actions/workflows/pr-spa.yml) [![End-to-end Tests](https://github.com/irby/secrets-sharing-tool/actions/workflows/pr-e2e.yml/badge.svg)](https://github.com/irby/secrets-sharing-tool/actions/workflows/pr-e2e.yml)
 
 # Kronocrypt
 

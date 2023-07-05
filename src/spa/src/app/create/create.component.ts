@@ -84,6 +84,8 @@ export class CreateComponent implements OnInit {
       const response = await axios.post<SecretSubmissionResponse>(environment.apiUrl + '/api/secrets', 
       new SecretSubmissionRequest(this.secretText.value, this.expiryTimeInMinutes));
       this.secretCreationResponse = response.data;
+      const expiry = new Date(this.secretCreationResponse.expireDateTime);
+      this.expireDateTime = this.convertDateToString(expiry);
     }
     catch (error: any) {
       const err = error as AxiosError<HttpErrorResponse>;
@@ -139,6 +141,25 @@ export class CreateComponent implements OnInit {
 
   changeExpiryTime(value: number){
     this.expiryTimeInMinutes = value;
+  }
+
+  convertDateToString(date: Date): string {
+    const month = date.getUTCMonth()+1;
+    const day = date.getUTCDate();
+    const year = date.getUTCFullYear();
+    const hours = this.padTimeUnit(date.getUTCHours());
+    const minutes = this.padTimeUnit(date.getUTCMinutes());
+    const seconds = this.padTimeUnit(date.getUTCSeconds());
+    return `${month}/${day}/${year} ${hours}:${minutes}:${seconds}`;
+  }
+
+  padTimeUnit(value: number): string {
+    let result = '';
+    if (value < 10) {
+      result += '0';
+    }
+    result += value;
+    return result;
   }
 
 }
