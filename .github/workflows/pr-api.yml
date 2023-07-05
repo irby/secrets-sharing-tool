@@ -41,5 +41,6 @@ jobs:
         working-directory: ./src/api
         run: dotnet test --verbosity normal
       - name: Stop Docker containers
+        if: always()
         working-directory: .
         run: docker-compose --project-directory . -f env/local/docker-compose.local.yml down

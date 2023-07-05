@@ -24,7 +24,7 @@ jobs:
         working-directory: ./e2e
         run: |
           npm install
-          npx playwright install
+          npx playwright install chromium
       - run: npx playwright test
         name: Run E2E Tests
         working-directory: ./e2e
