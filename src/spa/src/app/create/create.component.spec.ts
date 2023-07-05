@@ -327,5 +327,45 @@ describe('CreateComponent', () => {
       
       expect(component.expiryTimeInMinutes).toBe(100);
     });
-  })
+  });
+
+  describe('convertDateToString', () => {
+    it('calling with date returns formatted string', () => {
+      const dateTime = new Date("2023-07-05T05:06:03.4532984+00:00");
+      const expected = "7/5/2023 05:06:03";
+      const actual = component.convertDateToString(dateTime);
+
+      expect(actual).toBe(expected);
+    });
+  });
+
+  describe('padTimeUnit', () => {
+    it('pads if value is less than 10 (low)', () => {
+      const expected = "00";
+      const actual = component.padTimeUnit(0);
+
+      expect(actual).toBe(expected);
+    });
+
+    it('pads if value is less than 10 (high)', () => {
+      const expected = "09";
+      const actual = component.padTimeUnit(9);
+
+      expect(actual).toBe(expected);
+    });
+
+    it('does not pad if value is equal to 10', () => {
+      const expected = "10";
+      const actual = component.padTimeUnit(10);
+
+      expect(actual).toBe(expected);
+    });
+
+    it('does not pad if value is greater than 10', () => {
+      const expected = "11";
+      const actual = component.padTimeUnit(11);
+
+      expect(actual).toBe(expected);
+    });
+  });
 });
