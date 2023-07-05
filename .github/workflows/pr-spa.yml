@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'src/spa/**'
+      - '.github/workflows/pr-spa.yml'
 
 jobs:
   spa-test:

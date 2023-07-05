@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'src/api/**'
+      - '.github/workflows/pr-api.yml'
 
 jobs:
   api-test:
@@ -39,3 +40,6 @@ jobs:
       - name: Run tests
         working-directory: ./src/api
         run: dotnet test --verbosity normal
+      - name: Stop Docker containers
+        working-directory: .
+        run: docker-compose --project-directory . -f env/local/docker-compose.local.yml down
