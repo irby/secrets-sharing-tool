@@ -105,7 +105,7 @@ public class RetrieveSecretCommandHandler : BaseRequestHandler<RetrieveSecretCom
     private async Task CreateAuditRecordForState(Guid secretId, FailureReason? failureReason = null)
     {
         var httpContext = _httpContextAccessor.HttpContext;
-        await Database.AuditRecords.AddAsync(new SecretAccessAudit()
+        await Database.AuditRecords.AddAsync(new Models.SecretAccessAudit()
         {
             SecretId = secretId,
             FailureReason = failureReason,

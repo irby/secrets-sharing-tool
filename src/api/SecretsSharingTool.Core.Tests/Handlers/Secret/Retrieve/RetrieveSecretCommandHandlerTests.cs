@@ -229,7 +229,7 @@ public class RetrieveSecretCommandHandlerTests : BaseHandlerTest
         };
     }
 
-    private void TestAuditRecordUserAgentAndIpAddress(SecretAccessAudit audit)
+    private void TestAuditRecordUserAgentAndIpAddress(Models.SecretAccessAudit audit)
     {
         audit.ClientUserAgent.Should().Be("Test Browser");
         audit.ClientIpAddress.Should().Be("109.142.41.4");

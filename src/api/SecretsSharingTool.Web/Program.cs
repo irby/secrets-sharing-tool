@@ -19,9 +19,11 @@ builder.Services.AddHttpContextAccessor();
 builder.Services
     .AddCoreServices()
     .AddDatabase(configuration.BuildConnectionString())
-    .AddDatabaseAccessor();
+    .AddDatabaseAccessor()
+    .AddDateTimeProvider();
 
 builder.Services.AddHostedService<CleanseSecretsHostedService>();
+builder.Services.AddHostedService<CleanseSecretAccessAuditsHostedService>();
 
 builder.Services.ApplyPendingMigrations();
 
