@@ -1,5 +1,7 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Moq;
+using SecretsSharingTool.Core.Interfaces;
 using SecretsSharingTool.Core.Tests.Database;
 using SecretsSharingTool.Data;
 
@@ -26,6 +28,7 @@ public abstract class BaseHandlerTest
 
     protected readonly IServiceCollection ServiceCollection;
     protected readonly ServiceProvider ServiceProvider;
+    protected readonly Mock<IDateTimeProvider> MockDateTimeProvider = new ();
 
     protected BaseHandlerTest(DatabaseFixture fixture)
     {
@@ -33,6 +36,7 @@ public abstract class BaseHandlerTest
         ServiceCollection.AddLogging();
         ServiceCollection.AddDatabase(fixture.Configuration.BuildConnectionString(true));
         ServiceCollection.AddCoreServices();
+        ServiceCollection.AddSingleton(MockDateTimeProvider.Object);
         
         ConfigureAdditionalServices();
 

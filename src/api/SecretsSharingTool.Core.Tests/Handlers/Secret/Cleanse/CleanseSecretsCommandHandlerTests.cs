@@ -6,7 +6,13 @@ namespace SecretsSharingTool.Core.Tests.Handlers.Secret.Cleanse;
 
 public class CleanseSecretsCommandHandlerTests : BaseHandlerTest
 {
-    public CleanseSecretsCommandHandlerTests(DatabaseFixture fixture) : base(fixture) { }
+    public CleanseSecretsCommandHandlerTests(DatabaseFixture fixture) : base(fixture)
+    {
+        MockDateTimeProvider.Setup(p => p.GetCurrentDateTimeOffset())
+            .Returns(_testTime);
+    }
+
+    private readonly DateTimeOffset _testTime = DateTimeOffset.UtcNow;
 
     [Fact]
     public async Task Handle_WhenSecretsAreExpired_DeactivatesSecrets()
@@ -17,14 +23,14 @@ public class CleanseSecretsCommandHandlerTests : BaseHandlerTest
             {
                 EncryptedMessage = new [] { (byte) 0 },
                 IsActive = true,
-                CreatedOn = DateTimeOffset.UtcNow,
+                CreatedOn = _testTime,
                 ExpiryMinutes = 10
             },
             new ()
             {
                 EncryptedMessage = new [] { (byte) 1 },
                 IsActive = true,
-                CreatedOn = DateTimeOffset.UtcNow.AddMinutes(-9),
+                CreatedOn = _testTime.AddMinutes(-9).AddSeconds(-59),
                 ExpiryMinutes = 10
             },
         };
@@ -35,14 +41,14 @@ public class CleanseSecretsCommandHandlerTests : BaseHandlerTest
             {
                 EncryptedMessage = new [] { (byte) 2 },
                 IsActive = false,
-                CreatedOn = DateTimeOffset.UtcNow,
+                CreatedOn = _testTime,
                 ExpiryMinutes = 10
             },
             new ()
             {
                 EncryptedMessage = new [] { (byte) 3 },
                 IsActive = true,
-                CreatedOn = DateTimeOffset.UtcNow.AddMinutes(-11),
+                CreatedOn = _testTime.AddMinutes(-11),
                 ExpiryMinutes = 10
             },
         };
@@ -70,14 +76,14 @@ public class CleanseSecretsCommandHandlerTests : BaseHandlerTest
             {
                 EncryptedMessage = new [] { (byte) 0 },
                 IsActive = true,
-                CreatedOn = DateTimeOffset.UtcNow.AddMinutes(-5),
+                CreatedOn = _testTime.AddMinutes(-5),
                 ExpiryMinutes = 10
             },
             new ()
             {
                 EncryptedMessage = new [] { (byte) 1 },
                 IsActive = true,
-                CreatedOn = DateTimeOffset.UtcNow.AddMinutes(-9),
+                CreatedOn = _testTime.AddMinutes(-9),
                 ExpiryMinutes = 10
             },
         };
@@ -106,7 +112,7 @@ public class CleanseSecretsCommandHandlerTests : BaseHandlerTest
             {
                 EncryptedMessage = new [] { (byte) 0 },
                 IsActive = false,
-                CreatedOn = DateTimeOffset.UtcNow,
+                CreatedOn = _testTime,
                 ExpiryMinutes = 10
             });
         }
