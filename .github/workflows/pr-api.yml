@@ -15,6 +15,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: install hurl
+        uses: gacts/install-hurl@v1.0.3
+        with:
+          version: 4.0.0
       - name: Start Docker containers
         working-directory: .
         run: docker-compose --project-directory . -f env/local/docker-compose.local.yml up -d
@@ -40,6 +44,8 @@ jobs:
       - name: Run tests
         working-directory: ./src/api
         run: dotnet test --verbosity normal
+      - name: Run integration tests
+        run: hurl --test integrations/**/*.hurl
       - name: Stop Docker containers
         if: always()
         working-directory: .
